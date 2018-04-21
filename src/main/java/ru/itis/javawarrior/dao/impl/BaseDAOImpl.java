@@ -6,7 +6,7 @@ import org.hibernate.criterion.Order;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.itis.javawarrior.dao.BaseDAO;
-import ru.itis.javawarrior.entity.BaseEntity;
+import ru.itis.javawarrior.model.BaseEntity;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;

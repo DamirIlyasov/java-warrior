@@ -1,4 +1,4 @@
-package ru.itis.javawarrior.entity;
+package ru.itis.javawarrior.model;
 
 import lombok.Getter;
 import lombok.Setter;

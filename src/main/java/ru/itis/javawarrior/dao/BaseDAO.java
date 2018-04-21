@@ -1,6 +1,6 @@
 package ru.itis.javawarrior.dao;
 
-import ru.itis.javawarrior.entity.BaseEntity;
+import ru.itis.javawarrior.model.BaseEntity;
 
 import java.util.List;
 
