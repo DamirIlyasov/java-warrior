@@ -16,20 +16,20 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
-  @Bean
-  public Docket newsApi() {
-    return new Docket(DocumentationType.SWAGGER_2)
-        .select()
-        .apis(RequestHandlerSelectors.basePackage("ru.itis.javawarrior.controller"))
-        .paths(PathSelectors.any())
-        .build()
-        .apiInfo(apiInfo());
-  }
+    @Bean
+    public Docket newsApi() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("ru.itis.javawarrior.controller"))
+                .paths(PathSelectors.any())
+                .build()
+                .apiInfo(apiInfo());
+    }
 
-  private ApiInfo apiInfo() {
-    return new ApiInfoBuilder()
-        .title("Java-Warrior")
-        .version("0.1")
-        .build();
-  }
+    private ApiInfo apiInfo() {
+        return new ApiInfoBuilder()
+                .title("Java-Warrior")
+                .version("0.1")
+                .build();
+    }
 }
