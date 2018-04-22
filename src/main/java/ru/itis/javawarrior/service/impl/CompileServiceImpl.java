@@ -12,12 +12,17 @@ import ru.itis.javawarrior.util.compile.Runner;
 
 @Service
 public class CompileServiceImpl implements CompileService {
+    private int operationNumber = 0;
+
     @Override
     public List<ActionEnum> compile(String inputCode) {
-        String className = "ru.itis.javawarrior.util.compile.CompiledClass";
+        String className = "ru.itis.javawarrior.util.compile.CompiledClass" + operationNumber;
         List<ActionEnum> response = null;
         Runner runner;
-        String classCode = CompileParts.BEGINNING_OF_CODE +
+        String classCode = CompileParts.BEGINNING_OF_CODE_1_PART +
+            //TODO: think about it, smells like shit, but works
+            "CompiledClass" + operationNumber +
+            CompileParts.BEGINING_OF_CODE_2_PART +
             inputCode +
             CompileParts.ENDING_OF_CODE;
         try {
@@ -32,6 +37,7 @@ public class CompileServiceImpl implements CompileService {
         catch (ClassNotFoundException | IllegalAccessException | InstantiationException ignored) {
 
         }
+        operationNumber++;
         return response;
     }
 }
