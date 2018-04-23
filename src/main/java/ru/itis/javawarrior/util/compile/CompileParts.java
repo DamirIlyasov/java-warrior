@@ -1,7 +1,7 @@
 package ru.itis.javawarrior.util.compile;
 
 public class CompileParts {
-    public static final String BEGINNING_OF_CODE = "package ru.itis.javawarrior.util.compile;\n" +
+    public static final String BEGINNING_OF_CODE_1_PART = "package ru.itis.javawarrior.util.compile;\n" +
         "\n" +
         "import java.util.List;\n" +
         "\n" +
@@ -9,7 +9,8 @@ public class CompileParts {
         "import ru.itis.javawarrior.util.ActionEnum;\n" +
         "\n" +
         "\n" +
-        "public class CompiledClass implements Runner {\n" +
+        "public class ";
+    public static final String BEGINING_OF_CODE_2_PART = " implements Runner {\n" +
         "\n" +
         "    private final ActionServiceImpl actionService = new ActionServiceImpl();\n" +
         "\n" +
