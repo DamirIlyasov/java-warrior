@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import ru.itis.javawarrior.entity.GameResult;
 import ru.itis.javawarrior.service.CompileService;
 import ru.itis.javawarrior.util.ActionEnum;
 
@@ -27,10 +28,10 @@ public class MainController {
         return new ResponseEntity<>("Server online!", HttpStatus.OK);
     }
 
-    @ApiOperation("Test compile. Now can compile only walk(), jump() and shoot()")
+    @ApiOperation("Test compile. Now can compile only walk(), jump() and attack()")
     @PostMapping("/compile")
-    public ResponseEntity<List<ActionEnum>> testCompile(@RequestParam("inputedCode") String inputedCode) {
-        List<ActionEnum> result = compileService.compile(inputedCode);
+    public ResponseEntity<GameResult> testCompile(@RequestParam("inputtedCode") String inputtedCode) {
+        GameResult result = compileService.compile(inputtedCode);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

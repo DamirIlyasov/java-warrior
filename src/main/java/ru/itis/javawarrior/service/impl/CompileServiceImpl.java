@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.openhft.compiler.CompilerUtils;
 import org.springframework.stereotype.Service;
+import ru.itis.javawarrior.entity.GameResult;
 import ru.itis.javawarrior.service.CompileService;
 import ru.itis.javawarrior.util.ActionEnum;
 import ru.itis.javawarrior.util.compile.CompileParts;
@@ -15,9 +16,9 @@ public class CompileServiceImpl implements CompileService {
     private int operationNumber = 0;
 
     @Override
-    public List<ActionEnum> compile(String inputCode) {
+    public GameResult compile(String inputCode) {
         String className = "ru.itis.javawarrior.util.compile.CompiledClass" + operationNumber;
-        List<ActionEnum> response = null;
+        GameResult response = null;
         Runner runner;
         String classCode = CompileParts.BEGINNING_OF_CODE_1_PART +
             //TODO: think about it, smells like shit, but works
