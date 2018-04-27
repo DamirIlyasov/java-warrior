@@ -7,7 +7,7 @@ public interface ActionService {
 
     void walk();
 
-    void shoot();
+    void attack();
 
     void jump();
 

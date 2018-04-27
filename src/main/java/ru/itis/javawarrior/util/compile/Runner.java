@@ -1,9 +1,7 @@
 package ru.itis.javawarrior.util.compile;
 
-import java.util.List;
-
-import ru.itis.javawarrior.util.ActionEnum;
+import ru.itis.javawarrior.entity.GameResult;
 
 public interface Runner {
-    List<ActionEnum> main();
+    GameResult main();
 }
