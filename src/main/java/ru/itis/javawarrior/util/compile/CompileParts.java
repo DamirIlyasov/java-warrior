@@ -7,7 +7,7 @@ public class CompileParts {
             "import ru.itis.javawarrior.exception.StageCompletedException;\n" +
             "\n" +
             "public class ";
-    public static final String BEGINING_OF_CODE_2_PART = " extends AbstractCompiledClass {\n" +
+    public static final String BEGINNING_OF_CODE_2_PART = " extends AbstractCompiledClass {\n" +
             "    \n" +
             "    @Override\n" +
             "    protected void start() throws InvalidActionException, StageCompletedException {\n";
