@@ -9,5 +9,6 @@ public class JavaWarriorApplication {
     public static void main(String[] args) {
 
         SpringApplication.run(JavaWarriorApplication.class, args);
+        //Проверка пуша
     }
 }
