@@ -80,6 +80,11 @@ public class ActionServiceImpl implements ActionService {
         }
     }
 
+    @Override
+    public List<ActionEnum> getActions() {
+        return responseActions;
+    }
+
     //TODO: random generation
     private StageCell[] generateStage() {
         return new StageCell[] {
