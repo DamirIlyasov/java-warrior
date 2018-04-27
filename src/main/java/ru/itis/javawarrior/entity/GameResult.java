@@ -14,6 +14,7 @@ import ru.itis.javawarrior.util.ActionEnum;
 @Getter
 @AllArgsConstructor
 public class GameResult {
+    private String message;
     private List<ActionEnum> actions;
     private boolean isStageCompleted;
 }
