@@ -1,12 +1,9 @@
 package ru.itis.javawarrior.service.impl;
 
-import java.util.List;
-
 import net.openhft.compiler.CompilerUtils;
 import org.springframework.stereotype.Service;
 import ru.itis.javawarrior.entity.GameResult;
 import ru.itis.javawarrior.service.CompileService;
-import ru.itis.javawarrior.util.ActionEnum;
 import ru.itis.javawarrior.util.compile.CompileParts;
 import ru.itis.javawarrior.util.compile.Runner;
 
@@ -23,7 +20,7 @@ public class CompileServiceImpl implements CompileService {
         String classCode = CompileParts.BEGINNING_OF_CODE_1_PART +
                 //TODO: think about it, smells like shit, but works
                 "CompiledClass" + operationNumber +
-                CompileParts.BEGINING_OF_CODE_2_PART +
+                CompileParts.BEGINNING_OF_CODE_2_PART +
                 inputCode +
                 CompileParts.ENDING_OF_CODE;
 
