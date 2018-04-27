@@ -16,28 +16,25 @@ public class CompileServiceImpl implements CompileService {
     private int operationNumber = 0;
 
     @Override
-    public GameResult compile(String inputCode) {
+    public GameResult compile(String inputCode) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
         String className = "ru.itis.javawarrior.util.compile.CompiledClass" + operationNumber;
         GameResult response = null;
         Runner runner;
         String classCode = CompileParts.BEGINNING_OF_CODE_1_PART +
-            //TODO: think about it, smells like shit, but works
-            "CompiledClass" + operationNumber +
-            CompileParts.BEGINING_OF_CODE_2_PART +
-            inputCode +
-            CompileParts.ENDING_OF_CODE;
-        try {
-            Class aClass = CompilerUtils.CACHED_COMPILER.loadFromJava(className, classCode);
-            if (aClass != null) {
-                runner = (Runner) aClass.newInstance();
-                if (runner != null) {
-                    response = runner.main();
-                }
+                //TODO: think about it, smells like shit, but works
+                "CompiledClass" + operationNumber +
+                CompileParts.BEGINING_OF_CODE_2_PART +
+                inputCode +
+                CompileParts.ENDING_OF_CODE;
+
+        Class aClass = CompilerUtils.CACHED_COMPILER.loadFromJava(className, classCode);
+        if (aClass != null) {
+            runner = (Runner) aClass.newInstance();
+            if (runner != null) {
+                response = runner.main();
             }
         }
-        catch (ClassNotFoundException | IllegalAccessException | InstantiationException ignored) {
 
-        }
         operationNumber++;
         return response;
     }
