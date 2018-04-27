@@ -30,7 +30,7 @@ public class MainController {
 
     @ApiOperation("Test compile. Now can compile only walk(), jump() and attack()")
     @PostMapping("/compile")
-    public ResponseEntity<GameResult> testCompile(@RequestParam("inputtedCode") String inputtedCode) {
+    public ResponseEntity<GameResult> testCompile(@RequestParam("inputtedCode") String inputtedCode) throws IllegalAccessException, InstantiationException, ClassNotFoundException {
         GameResult result = compileService.compile(inputtedCode);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
