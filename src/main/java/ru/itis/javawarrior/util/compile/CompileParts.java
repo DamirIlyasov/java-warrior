@@ -11,8 +11,12 @@ public class CompileParts {
     public static final String BEGINNING_OF_CODE_2_PART = " extends AbstractCompiledClass {\n" +
             "    \n" +
             "    @Override\n" +
-            "    protected void start() throws TimeOutException, StageCompletedException, HeroDiedException {\n";
+            "    protected void start() throws TimeOutException, StageCompletedException, HeroDiedException {\n" +
+            "        for (int i = 0; i < 100; i++) {\n" +
+            "           ";
 
-    public static final String ENDING_OF_CODE = "    }\n" +
+    public static final String ENDING_OF_CODE = "\n" +
+            "       }\n" +
+            "    }\n" +
             "}\n";
 }

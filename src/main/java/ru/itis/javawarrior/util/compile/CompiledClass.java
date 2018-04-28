@@ -8,6 +8,8 @@
 //
 //    @Override
 //    protected void start() throws TimeOutException, StageCompletedException, HeroDiedException {
+//        for (int i = 0; i < 100; i++) {
 //
+//        }
 //    }
 //}
