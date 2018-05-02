@@ -16,7 +16,7 @@ public class GlobalExceptionHandlerController extends ResponseEntityExceptionHan
 
     @ExceptionHandler(ValidateCodeException.class)
     public ResponseEntity<String> validateCodeException(ValidateCodeException e) {
-        return new ResponseEntity<>("You'r code is not valid", BAD_REQUEST);
+        return new ResponseEntity<>(e.getMessage(), BAD_REQUEST);
     }
 
     @ExceptionHandler(Exception.class)

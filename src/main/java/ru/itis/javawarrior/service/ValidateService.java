@@ -1,8 +1,10 @@
 package ru.itis.javawarrior.service;
 
+import ru.itis.javawarrior.util.ban.Validation;
+
 /**
  * @author Damir Ilyasov
  */
 public interface ValidateService {
-    boolean validate(String code);
+    Validation validate(String code);
 }
