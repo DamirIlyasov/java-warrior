@@ -21,7 +21,6 @@ public class GlobalExceptionHandlerController extends ResponseEntityExceptionHan
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> exception(Exception e) {
-        Throwable rootCause = e.getCause();
-        return new ResponseEntity<>(rootCause.getMessage(), INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(e.getMessage(), INTERNAL_SERVER_ERROR);
     }
 }

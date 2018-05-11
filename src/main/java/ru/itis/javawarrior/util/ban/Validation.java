@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -12,4 +14,13 @@ import lombok.Setter;
 public class Validation {
     private boolean isValid;
     private String message;
+
+    public Validation(boolean isValid, List<String> messages){
+        this.isValid = isValid;
+        StringBuilder builder = new StringBuilder();
+        for (String line: messages){
+            builder.append(line);
+        }
+        this.message = builder.toString();
+    }
 }
