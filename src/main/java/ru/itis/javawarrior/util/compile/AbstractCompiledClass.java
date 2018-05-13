@@ -21,11 +21,11 @@ public abstract class AbstractCompiledClass implements Runner {
         try {
             start();
         } catch (InvalidActionException e) {
-            return new GameResult(actionService.getActions(), false);
+            return new GameResult(actionService.getActions(), false, e.getMessage());
         } catch (StageCompletedException e) {
-            return new GameResult(actionService.getActions(), true);
+            return new GameResult(actionService.getActions(), true, null);
         }
-        return new GameResult(actionService.getActions(), false);
+        return new GameResult(actionService.getActions(), false, null);
     }
 
 
