@@ -3,7 +3,6 @@ package ru.itis.javawarrior.util.compile;
 
 import ru.itis.javawarrior.entity.GameResult;
 import ru.itis.javawarrior.exception.HeroDiedException;
-import ru.itis.javawarrior.exception.InvalidActionException;
 import ru.itis.javawarrior.exception.StageCompletedException;
 import ru.itis.javawarrior.exception.TimeOutException;
 import ru.itis.javawarrior.service.ActionService;
@@ -34,11 +33,11 @@ public abstract class AbstractCompiledClass implements Runner {
                 throw new TimeOutException();
 
         } catch (StageCompletedException e) {
-            return new GameResult(e.getMessage(),actionService.getActions(), true);
-        } catch (HeroDiedException | TimeOutException e){
-            return new GameResult(e.getMessage(),actionService.getActions(), false);
+            return new GameResult(e.getMessage(), actionService.getActions(), true, "");
+        } catch (HeroDiedException | TimeOutException e) {
+            return new GameResult(e.getMessage(), actionService.getActions(), false, "");
         }
-        return new GameResult(DEFAULT_MESSAGE, actionService.getActions(), false);
+        return new GameResult(DEFAULT_MESSAGE, actionService.getActions(), false, "");
     }
 
 

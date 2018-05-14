@@ -17,12 +17,12 @@ public class GlobalExceptionHandlerController extends ResponseEntityExceptionHan
 
     @ExceptionHandler(ValidateCodeException.class)
     public ResponseEntity<GameResult> validateCodeException(ValidateCodeException e) {
-        return new ResponseEntity<>(new GameResult(null, false, e.getMessage()), BAD_REQUEST);
+        return new ResponseEntity<>(new GameResult(null, null, false, e.getMessage()), BAD_REQUEST);
 
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<GameResult> exception(Exception e) {
-        return new ResponseEntity<>(new GameResult(null, false, e.getMessage()), INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(new GameResult(null, null, false, e.getMessage()), INTERNAL_SERVER_ERROR);
     }
 }
