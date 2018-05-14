@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class JavaWarriorApplication {
 
     public static void main(String[] args) {
-
         SpringApplication.run(JavaWarriorApplication.class, args);
     }
 }

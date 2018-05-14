@@ -1,20 +1,13 @@
 package ru.itis.javawarrior.service;
 
-import ru.itis.javawarrior.util.ActionEnum;
-
 import java.util.List;
+
+import ru.itis.javawarrior.util.ActionEnum;
 
 /**
  * @author Damir Ilyasov
  */
-public interface ActionService {
-
-    void walk();
-
-    void attack();
-
-    void jump();
+public interface ActionService extends Actions{
 
     List<ActionEnum> getActions();
-
 }

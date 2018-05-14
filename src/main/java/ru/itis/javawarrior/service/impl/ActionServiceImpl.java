@@ -9,11 +9,15 @@ import ru.itis.javawarrior.entity.Hero;
 import ru.itis.javawarrior.entity.StageCell;
 import ru.itis.javawarrior.entity.Spike;
 import ru.itis.javawarrior.exception.HeroDiedException;
+import ru.itis.javawarrior.entity.StageCell;
 import ru.itis.javawarrior.exception.InvalidActionException;
 import ru.itis.javawarrior.exception.InvalidJumpException;
 import ru.itis.javawarrior.exception.StageCompletedException;
 import ru.itis.javawarrior.service.ActionService;
 import ru.itis.javawarrior.util.ActionEnum;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Используется в компилированном классе
@@ -73,7 +77,7 @@ public class ActionServiceImpl implements ActionService {
         }
         else {
             //cell after next cell is empty
-            if (stageCells[currentCell + 2].getContent() == null) {
+            if (stageCells[currentCell + 2].getContent() == null && !(stageCells[currentCell + 1].getContent() instanceof Enemy)) {
                 responseActions.add(ActionEnum.FLIP_FORWARD);
                 currentCell += 2;
             }

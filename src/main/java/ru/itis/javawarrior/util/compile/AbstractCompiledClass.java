@@ -71,5 +71,4 @@ public abstract class AbstractCompiledClass implements Runner {
         for (int i = 0; i < times; i++)
             actionService.jump();
     }
-
 }
