@@ -14,6 +14,7 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 public class GameResult {
+    private String message;
     private List<ActionEnum> actions;
     private boolean isStageCompleted;
     private String errorDescription;

@@ -2,8 +2,9 @@ package ru.itis.javawarrior.util.compile;
 
 
 import ru.itis.javawarrior.entity.GameResult;
-import ru.itis.javawarrior.exception.InvalidActionException;
+import ru.itis.javawarrior.exception.HeroDiedException;
 import ru.itis.javawarrior.exception.StageCompletedException;
+import ru.itis.javawarrior.exception.TimeOutException;
 import ru.itis.javawarrior.service.ActionService;
 import ru.itis.javawarrior.service.impl.ActionServiceImpl;
 
@@ -13,23 +14,34 @@ import ru.itis.javawarrior.service.impl.ActionServiceImpl;
  */
 public abstract class AbstractCompiledClass implements Runner {
 
+    private static final String DEFAULT_MESSAGE = "You lost!";
+    private static final int AVAILABLE_ITERATIONS_NUMBER = 10;
+
     protected ActionService actionService;
 
     @Override
     public GameResult main() {
         actionService = new ActionServiceImpl();
         try {
-            start();
-        } catch (InvalidActionException e) {
-            return new GameResult(actionService.getActions(), false, e.getMessage());
+            int count = 0;
+            while (count != AVAILABLE_ITERATIONS_NUMBER) {
+                start();
+                count++;
+            }
+            //тип если герой не умер и не выиграл
+            if (count == AVAILABLE_ITERATIONS_NUMBER)
+                throw new TimeOutException();
+
         } catch (StageCompletedException e) {
-            return new GameResult(actionService.getActions(), true, null);
+            return new GameResult(e.getMessage(), actionService.getActions(), true, "");
+        } catch (HeroDiedException | TimeOutException e) {
+            return new GameResult(e.getMessage(), actionService.getActions(), false, "");
         }
-        return new GameResult(actionService.getActions(), false, null);
+        return new GameResult(DEFAULT_MESSAGE, actionService.getActions(), false, "");
     }
 
 
-    protected abstract void start() throws InvalidActionException, StageCompletedException;
+    protected abstract void start() throws TimeOutException, StageCompletedException, HeroDiedException;
 
 
     protected void walk() {
