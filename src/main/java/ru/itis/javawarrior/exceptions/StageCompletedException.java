@@ -1,4 +1,4 @@
-package ru.itis.javawarrior.exception;
+package ru.itis.javawarrior.exceptions;
 
 /**
  * @author Damir Ilyasov

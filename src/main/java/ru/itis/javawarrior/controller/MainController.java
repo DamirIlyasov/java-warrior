@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.itis.javawarrior.entity.GameResult;
-import ru.itis.javawarrior.exception.ValidateCodeException;
+import ru.itis.javawarrior.exceptions.ValidateCodeException;
 import ru.itis.javawarrior.json.CompileJson;
 import ru.itis.javawarrior.service.CompileService;
 import ru.itis.javawarrior.service.ValidateService;

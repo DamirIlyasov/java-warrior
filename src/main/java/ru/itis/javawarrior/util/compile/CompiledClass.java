@@ -1,8 +1,8 @@
 //package ru.itis.javawarrior.util.compile;
 //
-//import ru.itis.javawarrior.exception.HeroDiedException;
-//import ru.itis.javawarrior.exception.StageCompletedException;
-//import ru.itis.javawarrior.exception.TimeOutException;
+//import ru.itis.javawarrior.exceptions.HeroDiedException;
+//import ru.itis.javawarrior.exceptions.StageCompletedException;
+//import ru.itis.javawarrior.exceptions.TimeOutException;
 //
 //public class CompiledClass extends AbstractCompiledClass {
 //

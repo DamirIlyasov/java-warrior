@@ -1,17 +1,17 @@
 package ru.itis.javawarrior.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import lombok.Getter;
 import ru.itis.javawarrior.entity.Enemy;
 import ru.itis.javawarrior.entity.Hero;
 import ru.itis.javawarrior.entity.Spike;
 import ru.itis.javawarrior.entity.StageCell;
-import ru.itis.javawarrior.exception.HeroDiedException;
-import ru.itis.javawarrior.exception.StageCompletedException;
+import ru.itis.javawarrior.exceptions.HeroDiedException;
+import ru.itis.javawarrior.exceptions.StageCompletedException;
 import ru.itis.javawarrior.service.ActionService;
 import ru.itis.javawarrior.util.ActionEnum;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Используется в компилированном классе

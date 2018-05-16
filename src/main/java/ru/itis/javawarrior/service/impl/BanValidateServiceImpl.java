@@ -9,7 +9,7 @@ import javax.tools.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-import ru.itis.javawarrior.exception.ServerException;
+import ru.itis.javawarrior.exceptions.ServerException;
 import ru.itis.javawarrior.service.FileService;
 import ru.itis.javawarrior.service.ValidateService;
 import ru.itis.javawarrior.util.ban.BannedConstructions;

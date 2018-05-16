@@ -2,9 +2,9 @@ package ru.itis.javawarrior.util.compile;
 
 
 import ru.itis.javawarrior.entity.GameResult;
-import ru.itis.javawarrior.exception.HeroDiedException;
-import ru.itis.javawarrior.exception.StageCompletedException;
-import ru.itis.javawarrior.exception.TimeOutException;
+import ru.itis.javawarrior.exceptions.HeroDiedException;
+import ru.itis.javawarrior.exceptions.StageCompletedException;
+import ru.itis.javawarrior.exceptions.TimeOutException;
 import ru.itis.javawarrior.service.ActionService;
 import ru.itis.javawarrior.service.impl.ActionServiceImpl;
 
