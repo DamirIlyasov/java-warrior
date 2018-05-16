@@ -38,7 +38,9 @@ public class BanValidateServiceImpl implements ValidateService {
         if (walkMethods <= AVAILABLE_WALK_COUNT
                 && attackMethods <= AVAILABLE_ATTACK_COUNT
                 && jumpAttack <= AVAILABLE_JUMP_COUNT) {
-            return checkSyntax(code);
+            //закомментил , т.к. не работало на хероку
+//            return checkSyntax(code);
+            return checkSecurity(code);
         } else {
             return new Validation(false, Messages.METHOD_COUNT_USAGE_ERROR);
         }
