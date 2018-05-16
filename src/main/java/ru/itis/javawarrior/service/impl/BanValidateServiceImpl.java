@@ -2,6 +2,7 @@ package ru.itis.javawarrior.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import ru.itis.javawarrior.exception.ServerException;
 import ru.itis.javawarrior.service.FileService;
 import ru.itis.javawarrior.service.ValidateService;
@@ -24,13 +25,26 @@ public class BanValidateServiceImpl implements ValidateService {
     @Autowired
     private FileService fileService;
 
+    private static final int AVAILABLE_WALK_COUNT = 1;
+    private static final int AVAILABLE_ATTACK_COUNT = 1;
+    private static final int AVAILABLE_JUMP_COUNT = 1;
+
     @Override
     public Validation validate(String code) {
-        return performValidationProcess(code);
+        return checkMethodCountUsage(code);
     }
 
-    private Validation performValidationProcess(String code) {
-        return checkSyntax(code);
+    private Validation checkMethodCountUsage(String code) {
+        int walkMethods = StringUtils.countOccurrencesOf(code, "walk();");
+        int attackMethods = StringUtils.countOccurrencesOf(code, "attack();");
+        int jumpAttack = StringUtils.countOccurrencesOf(code, "jump();");
+        if (walkMethods <= AVAILABLE_WALK_COUNT
+                && attackMethods <= AVAILABLE_ATTACK_COUNT
+                && jumpAttack <= AVAILABLE_JUMP_COUNT) {
+            return checkSyntax(code);
+        } else {
+            return new Validation(false, Messages.METHOD_COUNT_USAGE_ERROR);
+        }
     }
 
     private Validation checkSyntax(String code) {
@@ -85,7 +99,6 @@ public class BanValidateServiceImpl implements ValidateService {
         }
         return new Validation(true, Messages.VALIDATION_SUCCESS);
     }
-
 
     private String getString(Field field) {
         try {
