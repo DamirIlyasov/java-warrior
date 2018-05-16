@@ -5,10 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.itis.javawarrior.entity.GameResult;
 import ru.itis.javawarrior.exception.ValidateCodeException;
 import ru.itis.javawarrior.json.CompileJson;
@@ -34,6 +31,7 @@ public class MainController {
         return new ResponseEntity<>("Server online!", HttpStatus.OK);
     }
 
+    @CrossOrigin
     @ApiOperation("Test compile. Now can compile only walk(), jump() and attack()")
     @PostMapping("/compile")
     public ResponseEntity<GameResult> testCompile(@RequestBody CompileJson compileJson) throws IllegalAccessException, InstantiationException, ClassNotFoundException {
