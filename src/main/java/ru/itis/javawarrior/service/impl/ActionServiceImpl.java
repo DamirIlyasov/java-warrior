@@ -96,6 +96,16 @@ public class ActionServiceImpl implements ActionService {
         }
     }
 
+    @Override
+    public boolean isEnemyAhead() {
+        return currentCell + 2 <= stageCells.length && stageCells[currentCell + 1].getContent() instanceof Enemy;
+    }
+
+    @Override
+    public boolean isSpikeAhead() {
+        return currentCell + 2 <= stageCells.length && stageCells[currentCell + 1].getContent() instanceof Spike;
+    }
+
     //TODO: random generation
     private StageCell[] generateStage() {
         return new StageCell[]{
