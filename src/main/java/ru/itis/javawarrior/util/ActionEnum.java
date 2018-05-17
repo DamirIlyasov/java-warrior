@@ -6,5 +6,6 @@ package ru.itis.javawarrior.util;
 public enum ActionEnum {
     MOVE_FORWARD,
     FLIP_FORWARD,
-    SHOOT
+    SHOOT,
+    DEATH
 }
