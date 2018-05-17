@@ -8,8 +8,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import ru.itis.javawarrior.entity.GameResult;
 import ru.itis.javawarrior.exception.ValidateCodeException;
 
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static org.springframework.http.HttpStatus.OK;
 
 
 @ControllerAdvice
@@ -17,7 +17,7 @@ public class GlobalExceptionHandlerController extends ResponseEntityExceptionHan
 
     @ExceptionHandler(ValidateCodeException.class)
     public ResponseEntity<GameResult> validateCodeException(ValidateCodeException e) {
-        return new ResponseEntity<>(new GameResult(null, null, false, e.getMessage()), BAD_REQUEST);
+        return new ResponseEntity<>(new GameResult(null, null, false, e.getMessage()), OK);
 
     }
 

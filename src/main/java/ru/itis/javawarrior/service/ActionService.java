@@ -1,13 +1,13 @@
 package ru.itis.javawarrior.service;
 
-import java.util.List;
+import ru.itis.javawarrior.entity.Action;
 
-import ru.itis.javawarrior.util.ActionEnum;
+import java.util.List;
 
 /**
  * @author Damir Ilyasov
  */
 public interface ActionService extends Actions{
 
-    List<ActionEnum> getActions();
+    List<Action> getActions();
 }

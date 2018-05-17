@@ -1,10 +1,7 @@
 package ru.itis.javawarrior.service.impl;
 
 import lombok.Getter;
-import ru.itis.javawarrior.entity.Enemy;
-import ru.itis.javawarrior.entity.Hero;
-import ru.itis.javawarrior.entity.Spike;
-import ru.itis.javawarrior.entity.StageCell;
+import ru.itis.javawarrior.entity.*;
 import ru.itis.javawarrior.exception.HeroDiedException;
 import ru.itis.javawarrior.exception.StageCompletedException;
 import ru.itis.javawarrior.service.ActionService;
@@ -18,7 +15,7 @@ import java.util.List;
  */
 @Getter
 public class ActionServiceImpl implements ActionService {
-    private List<ActionEnum> responseActions;
+    private List<Action> responseActions;
     private int currentCell;
     private StageCell stageCells[];
     private boolean stageCompleted;
@@ -36,14 +33,14 @@ public class ActionServiceImpl implements ActionService {
     public void walk() {
         //stage completed if player at the last cell
         if (currentCell + 1 >= stageCells.length) {
-            responseActions.add(ActionEnum.MOVE_FORWARD);
+            addAction(ActionEnum.MOVE_FORWARD);
             throw new StageCompletedException();
         }
         if (stageCells[currentCell + 1].getContent() == null) {
-            responseActions.add(ActionEnum.MOVE_FORWARD);
+            addAction(ActionEnum.MOVE_FORWARD);
             currentCell++;
         } else {
-            responseActions.add(ActionEnum.MOVE_FORWARD);
+            addAction(ActionEnum.MOVE_FORWARD);
             damageHero(stageCells[currentCell + 1].getContent().damage());
         }
     }
@@ -55,7 +52,7 @@ public class ActionServiceImpl implements ActionService {
         if (currentCell + 1 < stageCells.length) {
             stageCells[currentCell + 1].setContent(null);
         }
-        responseActions.add(ActionEnum.SHOOT);
+        addAction(ActionEnum.SHOOT);
     }
 
     @Override
@@ -65,22 +62,22 @@ public class ActionServiceImpl implements ActionService {
 
         //jumped to finish, stage completed
         if (currentCell + 2 >= stageCells.length) {
-            responseActions.add(ActionEnum.FLIP_FORWARD);
+            addAction(ActionEnum.FLIP_FORWARD);
             throw new StageCompletedException();
         } else {
             //cell after next cell is empty
             if (stageCells[currentCell + 2].getContent() == null && !(stageCells[currentCell + 1].getContent() instanceof Enemy)) {
-                responseActions.add(ActionEnum.FLIP_FORWARD);
+                addAction(ActionEnum.FLIP_FORWARD);
                 currentCell += 2;
             } else {
-                responseActions.add(ActionEnum.FLIP_FORWARD);
+                addAction(ActionEnum.FLIP_FORWARD);
                 damageHero(stageCells[currentCell + 1].getContent().damage());
             }
         }
     }
 
     @Override
-    public List<ActionEnum> getActions() {
+    public List<Action> getActions() {
         return responseActions;
     }
 
@@ -92,8 +89,14 @@ public class ActionServiceImpl implements ActionService {
         int currentHp = hero.getHp();
         hero.setHp(currentHp - damage);
         if (!isHeroAlive()) {
+            addAction(ActionEnum.DEATH);
             throw new HeroDiedException();
         }
+    }
+
+    private void addAction(ActionEnum actionEnum){
+        Action action = new Action(hero.getHp(), actionEnum);
+        responseActions.add(action);
     }
 
     @Override
