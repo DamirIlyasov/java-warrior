@@ -1,5 +1,8 @@
 package ru.itis.javawarrior.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import lombok.Getter;
 import ru.itis.javawarrior.entity.Enemy;
 import ru.itis.javawarrior.entity.Hero;
@@ -9,9 +12,6 @@ import ru.itis.javawarrior.exception.HeroDiedException;
 import ru.itis.javawarrior.exception.StageCompletedException;
 import ru.itis.javawarrior.service.ActionService;
 import ru.itis.javawarrior.util.ActionEnum;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Используется в компилированном классе
@@ -92,6 +92,7 @@ public class ActionServiceImpl implements ActionService {
         int currentHp = hero.getHp();
         hero.setHp(currentHp - damage);
         if (!isHeroAlive()) {
+            responseActions.add(ActionEnum.DEATH);
             throw new HeroDiedException();
         }
     }
