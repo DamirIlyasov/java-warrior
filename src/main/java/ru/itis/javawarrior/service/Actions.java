@@ -9,4 +9,8 @@ public interface Actions {
     void attack();
 
     void jump();
+
+    boolean isEnemyAhead();
+
+    boolean isSpikeAhead();
 }

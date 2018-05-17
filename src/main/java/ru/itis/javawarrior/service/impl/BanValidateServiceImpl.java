@@ -28,7 +28,7 @@ public class BanValidateServiceImpl implements ValidateService {
 
     @Override
     public Validation validate(String code) {
-        return checkMethodCountUsage(code);
+        return checkSyntax(code);
     }
 
     private Validation checkMethodCountUsage(String code) {

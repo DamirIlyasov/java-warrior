@@ -16,6 +16,7 @@ public abstract class AbstractCompiledClass implements Runner {
 
     private static final String DEFAULT_MESSAGE = "You lost!";
     private static final int AVAILABLE_ITERATIONS_NUMBER = 10;
+    private boolean isActionMade;
 
     protected ActionService actionService;
 
@@ -25,6 +26,7 @@ public abstract class AbstractCompiledClass implements Runner {
         try {
             int count = 0;
             while (count != AVAILABLE_ITERATIONS_NUMBER) {
+                isActionMade = false;
                 start();
                 count++;
             }
@@ -45,15 +47,32 @@ public abstract class AbstractCompiledClass implements Runner {
 
 
     protected void walk() {
-        actionService.walk();
+        if (!isActionMade) {
+            actionService.walk();
+            isActionMade = true;
+        }
     }
 
     protected void attack() {
-        actionService.attack();
+        if (!isActionMade) {
+            actionService.attack();
+            isActionMade = true;
+        }
     }
 
     protected void jump() {
-        actionService.jump();
+        if (!isActionMade) {
+            actionService.jump();
+            isActionMade = true;
+        }
+    }
+
+    protected boolean enemyAhead() {
+        return actionService.isEnemyAhead();
+    }
+
+    protected boolean spikesAhead() {
+        return actionService.isSpikeAhead();
     }
 
     protected void walk(int times) {
