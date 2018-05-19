@@ -11,4 +11,5 @@ import ru.itis.javawarrior.util.ActionEnum;
 public class Action {
     private int heroHp;
     private ActionEnum actionEnum;
+    private int damaged;
 }

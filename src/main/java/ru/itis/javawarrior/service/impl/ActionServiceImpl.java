@@ -35,15 +35,16 @@ public class ActionServiceImpl implements ActionService {
     public void walk() {
         //stage completed if player at the last cell
         if (currentCell + 1 >= stageCells.length) {
-            addAction(ActionEnum.MOVE_FORWARD);
+            addAction(ActionEnum.MOVE_FORWARD, 0);
             throw new StageCompletedException();
         }
         if (stageCells[currentCell + 1].getContent() == null) {
-            addAction(ActionEnum.MOVE_FORWARD);
+            addAction(ActionEnum.MOVE_FORWARD, 0);
             currentCell++;
         } else {
-            addAction(ActionEnum.MOVE_FORWARD);
-            damageHero(stageCells[currentCell + 1].getContent().damage());
+            int damage = stageCells[currentCell + 1].getContent().damage();
+            damageHero(damage);
+            addAction(ActionEnum.MOVE_FORWARD, damage);
         }
     }
 
@@ -54,7 +55,7 @@ public class ActionServiceImpl implements ActionService {
         if (currentCell + 1 < stageCells.length) {
             stageCells[currentCell + 1].setContent(null);
         }
-        addAction(ActionEnum.SHOOT);
+        addAction(ActionEnum.SHOOT, 0);
     }
 
     @Override
@@ -64,16 +65,18 @@ public class ActionServiceImpl implements ActionService {
 
         //jumped to finish, stage completed
         if (currentCell + 2 >= stageCells.length) {
-            addAction(ActionEnum.FLIP_FORWARD);
+            addAction(ActionEnum.FLIP_FORWARD, 0);
             throw new StageCompletedException();
         } else {
             //cell after next cell is empty
             if (stageCells[currentCell + 2].getContent() == null && !(stageCells[currentCell + 1].getContent() instanceof Enemy)) {
-                addAction(ActionEnum.FLIP_FORWARD);
+                addAction(ActionEnum.FLIP_FORWARD, 0);
                 currentCell += 2;
             } else {
-                addAction(ActionEnum.FLIP_FORWARD);
-                damageHero(stageCells[currentCell + 1].getContent().damage());
+                // smth ahead, hero gets damaged
+                int damage = stageCells[currentCell + 1].getContent().damage();
+                damageHero(damage);
+                addAction(ActionEnum.FLIP_FORWARD, damage);
             }
         }
     }
@@ -81,7 +84,7 @@ public class ActionServiceImpl implements ActionService {
     @Override
     public void rest() {
         hero.setHp(hero.getHp() + RECOVERY);
-        addAction(ActionEnum.REST);
+        addAction(ActionEnum.REST, 0);
     }
 
     @Override
@@ -113,13 +116,13 @@ public class ActionServiceImpl implements ActionService {
         int currentHp = hero.getHp();
         hero.setHp(currentHp - damage);
         if (!isHeroAlive()) {
-            addAction(ActionEnum.DEATH);
+            addAction(ActionEnum.DEATH, damage);
             throw new HeroDiedException();
         }
     }
 
-    private void addAction(ActionEnum actionEnum) {
-        Action action = new Action(hero.getHp(), actionEnum);
+    private void addAction(ActionEnum actionEnum, int damaged) {
+        Action action = new Action(hero.getHp(), actionEnum, damaged);
         responseActions.add(action);
     }
 
