@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Spike implements CellContent {
-    private int damage = 100;
+    private int damage = 50;
     private int health = 100;
 
     @Override

@@ -1,14 +1,14 @@
 package ru.itis.javawarrior.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import lombok.Getter;
 import ru.itis.javawarrior.entity.*;
 import ru.itis.javawarrior.exception.HeroDiedException;
 import ru.itis.javawarrior.exception.StageCompletedException;
 import ru.itis.javawarrior.service.ActionService;
 import ru.itis.javawarrior.util.ActionEnum;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Используется в компилированном классе
@@ -43,8 +43,8 @@ public class ActionServiceImpl implements ActionService {
             currentCell++;
         } else {
             int damage = stageCells[currentCell + 1].getContent().damage();
+            addAction(ActionEnum.MOVE_FORWARD_REJECTED, damage);
             damageHero(damage);
-            addAction(ActionEnum.MOVE_FORWARD, damage);
         }
     }
 
@@ -75,8 +75,8 @@ public class ActionServiceImpl implements ActionService {
             } else {
                 // smth ahead, hero gets damaged
                 int damage = stageCells[currentCell + 1].getContent().damage();
+                addAction(ActionEnum.FLIP_FORWARD_REJECTED, damage);
                 damageHero(damage);
-                addAction(ActionEnum.FLIP_FORWARD, damage);
             }
         }
     }
