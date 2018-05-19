@@ -83,7 +83,13 @@ public class ActionServiceImpl implements ActionService {
 
     @Override
     public void rest() {
-        hero.setHp(hero.getHp() + RECOVERY);
+        if (hero.getHp() < 100) {
+            if (hero.getHp() > 80) {
+                hero.setHp(hero.getHp() + 100 - hero.getHp());
+            } else {
+                hero.setHp(hero.getHp() + RECOVERY);
+            }
+        }
         addAction(ActionEnum.REST, 0);
     }
 
