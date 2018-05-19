@@ -1,11 +1,5 @@
 package ru.itis.javawarrior.service.impl;
 
-import java.io.IOException;
-import java.lang.reflect.Field;
-import java.util.*;
-import java.util.stream.Collectors;
-import javax.tools.*;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -15,6 +9,12 @@ import ru.itis.javawarrior.service.ValidateService;
 import ru.itis.javawarrior.util.ban.BannedConstructions;
 import ru.itis.javawarrior.util.ban.Validation;
 import ru.itis.javawarrior.util.messages.Messages;
+
+import javax.tools.*;
+import java.io.IOException;
+import java.lang.reflect.Field;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class BanValidateServiceImpl implements ValidateService {
@@ -63,16 +63,13 @@ public class BanValidateServiceImpl implements ValidateService {
 
         List<String> messages = new ArrayList<>();
 
-        for (Diagnostic diagnostic : diagnostics.getDiagnostics()) {
-
-            if (diagnostic.getLineNumber() == 7 && diagnostic.getPosition() == 224) {
-                continue; // не удалять, это чтобы избежать ошибки из-за lombok (по-ругому никак)
+        diagnostics.getDiagnostics().forEach(diagnostic -> {
+            if (diagnostic.getLineNumber() != 7 && diagnostic.getPosition() != 224) {
+                messages.add(diagnostic.getKind() + ": Line [" + (diagnostic.getLineNumber() - 10)
+                        + "] Position [" + (diagnostic.getPosition() - 325)
+                        + "] " + diagnostic.getMessage(Locale.ROOT) + "\n");
             }
-            messages.add(diagnostic.getKind() + ": Line [" + (diagnostic.getLineNumber() - 10)
-                    + "] Position [" + (diagnostic.getPosition() - 325)
-                    + "] " + diagnostic.getMessage(Locale.ROOT) + "\n");
-        }
-
+        });
 
         if (messages.isEmpty()) {
             return checkSecurity(code);
@@ -83,9 +80,7 @@ public class BanValidateServiceImpl implements ValidateService {
 
     private Validation checkSecurity(String code) {
         String regex;
-        List<Field> fields = Arrays.asList(BannedConstructions.class.getFields());
-        List<String> bannedConstructions = fields
-                .stream()
+        List<String> bannedConstructions = Arrays.stream(BannedConstructions.class.getFields())
                 .map(this::getString)
                 .collect(Collectors.toList());
         for (String bannedConstruction : bannedConstructions) {

@@ -14,7 +14,6 @@ import ru.itis.javawarrior.service.impl.ActionServiceImpl;
  */
 public abstract class AbstractCompiledClass implements Runner {
 
-    private static final String DEFAULT_MESSAGE = "You lost!";
     private static final int AVAILABLE_ITERATIONS_NUMBER = 10;
     private boolean isActionMade;
 
@@ -31,15 +30,13 @@ public abstract class AbstractCompiledClass implements Runner {
                 count++;
             }
             //тип если герой не умер и не выиграл
-            if (count == AVAILABLE_ITERATIONS_NUMBER)
-                throw new TimeOutException();
-
+            throw new TimeOutException();
         } catch (StageCompletedException e) {
             return new GameResult(e.getMessage(), actionService.getActions(), true, "");
         } catch (HeroDiedException | TimeOutException e) {
             return new GameResult(e.getMessage(), actionService.getActions(), false, "");
         }
-        return new GameResult(DEFAULT_MESSAGE, actionService.getActions(), false, "");
+
     }
 
 
