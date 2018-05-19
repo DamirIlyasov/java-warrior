@@ -8,6 +8,6 @@ public enum ActionEnum {
     MOVE_FORWARD,
     FLIP_FORWARD,
     SHOOT,
-    DEATH
-
+    DEATH,
+    REST
 }

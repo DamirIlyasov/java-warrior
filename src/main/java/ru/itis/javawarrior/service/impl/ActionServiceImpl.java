@@ -15,6 +15,8 @@ import java.util.List;
  */
 @Getter
 public class ActionServiceImpl implements ActionService {
+    private static int RECOVERY = 20;
+
     private List<Action> responseActions;
     private int currentCell;
     private StageCell stageCells[];
@@ -77,8 +79,30 @@ public class ActionServiceImpl implements ActionService {
     }
 
     @Override
+    public void rest() {
+        hero.setHp(hero.getHp() + RECOVERY);
+        addAction(ActionEnum.REST);
+    }
+
+    @Override
+    public int health() {
+        return hero.getHp();
+    }
+
+    @Override
     public List<Action> getActions() {
         return responseActions;
+    }
+
+
+    @Override
+    public boolean isEnemyAhead() {
+        return currentCell + 2 <= stageCells.length && stageCells[currentCell + 1].getContent() instanceof Enemy;
+    }
+
+    @Override
+    public boolean isSpikeAhead() {
+        return currentCell + 2 <= stageCells.length && stageCells[currentCell + 1].getContent() instanceof Spike;
     }
 
     private boolean isHeroAlive() {
@@ -94,19 +118,9 @@ public class ActionServiceImpl implements ActionService {
         }
     }
 
-    private void addAction(ActionEnum actionEnum){
+    private void addAction(ActionEnum actionEnum) {
         Action action = new Action(hero.getHp(), actionEnum);
         responseActions.add(action);
-    }
-
-    @Override
-    public boolean isEnemyAhead() {
-        return currentCell + 2 <= stageCells.length && stageCells[currentCell + 1].getContent() instanceof Enemy;
-    }
-
-    @Override
-    public boolean isSpikeAhead() {
-        return currentCell + 2 <= stageCells.length && stageCells[currentCell + 1].getContent() instanceof Spike;
     }
 
     //TODO: random generation

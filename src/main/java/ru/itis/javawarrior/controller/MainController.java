@@ -32,7 +32,15 @@ public class MainController {
     }
 
     @CrossOrigin
-    @ApiOperation("Test compile. Now can compile only walk(), jump() and attack()")
+    @ApiOperation("Available actions:\n" +
+            "    walk();\n" +
+            "    attack();\n" +
+            "    jump();\n" +
+            "    rest();\n" +
+            "    health();\n" +
+            "    enemyAhead();\n" +
+            "    spikesAhead();"
+    )
     @PostMapping("/compile")
     public ResponseEntity<GameResult> testCompile(@RequestBody CompileJson compileJson) throws IllegalAccessException, InstantiationException, ClassNotFoundException {
         Validation validation = validateService.validate(compileJson.getInputtedCode());
