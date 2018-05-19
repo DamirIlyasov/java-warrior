@@ -67,6 +67,17 @@ public abstract class AbstractCompiledClass implements Runner {
         }
     }
 
+    protected void rest() {
+        if (!isActionMade) {
+            actionService.rest();
+            isActionMade = true;
+        }
+    }
+
+    protected int health() {
+        return actionService.health();
+    }
+
     protected boolean enemyAhead() {
         return actionService.isEnemyAhead();
     }
