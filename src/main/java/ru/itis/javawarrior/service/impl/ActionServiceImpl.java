@@ -55,7 +55,14 @@ public class ActionServiceImpl implements ActionService {
         if (currentCell + 1 < stageCells.length) {
             stageCells[currentCell + 1].setContent(null);
         }
-        addAction(ActionEnum.SHOOT, 0);
+
+        if (stageCells[currentCell + 1].getContent() != null) {
+            int damage = stageCells[currentCell + 1].getContent().damage();
+            addAction(ActionEnum.SHOOT, damage);
+            damageHero(damage);
+        } else {
+            addAction(ActionEnum.SHOOT, 0);
+        }
     }
 
     @Override
@@ -91,6 +98,12 @@ public class ActionServiceImpl implements ActionService {
             }
         }
         addAction(ActionEnum.REST, 0);
+//
+//        if (stageCells[currentCell + 1].getContent() != null) {
+//            int damage = stageCells[currentCell + 1].getContent().damage();
+//            addAction(ActionEnum.MOVE_FORWARD_REJECTED, damage);
+//            damageHero(damage);
+//        }
     }
 
     @Override
