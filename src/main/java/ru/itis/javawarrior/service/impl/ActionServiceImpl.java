@@ -50,11 +50,6 @@ public class ActionServiceImpl implements ActionService {
 
     @Override
     public void attack() {
-        //clearing next cell if enemy there
-        //if player at the last cell adding animation only
-        if (currentCell + 1 < stageCells.length) {
-            stageCells[currentCell + 1].setContent(null);
-        }
 
         if (stageCells[currentCell + 1].getContent() != null) {
             int damage = stageCells[currentCell + 1].getContent().damage();
@@ -62,6 +57,12 @@ public class ActionServiceImpl implements ActionService {
             damageHero(damage);
         } else {
             addAction(ActionEnum.SHOOT, 0);
+        }
+
+        //clearing next cell if enemy there
+        //if player at the last cell adding animation only
+        if (currentCell + 1 < stageCells.length && (stageCells[currentCell + 1].getContent() instanceof Enemy)) {
+            stageCells[currentCell + 1].setContent(null);
         }
     }
 
@@ -157,3 +158,4 @@ public class ActionServiceImpl implements ActionService {
         };
     }
 }
+
