@@ -13,7 +13,7 @@ public class CompileServiceImpl implements CompileService {
     private int operationNumber = 0;
 
     @Override
-    public GameResult compile(String inputCode) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
+    public GameResult compile(String inputCode, Integer levelNumber) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
         String className = "ru.itis.javawarrior.util.compile.CompiledClass" + operationNumber;
         GameResult response = null;
         Runner runner;
@@ -28,7 +28,7 @@ public class CompileServiceImpl implements CompileService {
         if (aClass != null) {
             runner = (Runner) aClass.newInstance();
             if (runner != null) {
-                response = runner.main();
+                response = runner.main(levelNumber);
             }
         }
 

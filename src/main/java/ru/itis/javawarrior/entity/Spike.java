@@ -2,18 +2,18 @@ package ru.itis.javawarrior.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import ru.itis.javawarrior.entity.enums.ContentType;
 
 /**
  * @author Damir Ilyasov
  */
 @Getter
 @Setter
-public class Spike implements CellContent {
-    private int damage = 50;
-    private int health = 100;
+public class Spike extends CellContent {
 
-    @Override
-    public int damage() {
-        return damage;
+    public Spike() {
+        this.health = 100;
+        this.damage = 50;
+        this.contentType = ContentType.SPIKE;
     }
 }

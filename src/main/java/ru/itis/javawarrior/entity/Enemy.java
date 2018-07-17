@@ -2,18 +2,18 @@ package ru.itis.javawarrior.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import ru.itis.javawarrior.entity.enums.ContentType;
 
 /**
  * @author Damir Ilyasov
  */
 @Getter
 @Setter
-public class Enemy implements CellContent {
-    private int health = 50;
-    private int attackPower = 50;
+public class Enemy extends CellContent {
 
-    @Override
-    public int damage() {
-        return attackPower;
+    public Enemy() {
+        this.health = 50;
+        this.damage = 50;
+        this.contentType = ContentType.ENEMY;
     }
 }
