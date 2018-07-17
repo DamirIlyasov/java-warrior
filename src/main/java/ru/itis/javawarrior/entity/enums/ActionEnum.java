@@ -1,4 +1,4 @@
-package ru.itis.javawarrior.util;
+package ru.itis.javawarrior.entity.enums;
 
 /**
  * @author Damir Ilyasov

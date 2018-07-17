@@ -1,31 +1,34 @@
 package ru.itis.javawarrior.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import lombok.Getter;
-import ru.itis.javawarrior.entity.*;
+import ru.itis.javawarrior.entity.Action;
+import ru.itis.javawarrior.entity.Hero;
+import ru.itis.javawarrior.entity.StageCell;
+import ru.itis.javawarrior.entity.enums.ActionEnum;
+import ru.itis.javawarrior.entity.enums.ContentType;
 import ru.itis.javawarrior.exception.HeroDiedException;
 import ru.itis.javawarrior.exception.StageCompletedException;
 import ru.itis.javawarrior.service.ActionService;
-import ru.itis.javawarrior.util.ActionEnum;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Используется в компилированном классе
  */
 @Getter
 public class ActionServiceImpl implements ActionService {
-    private static int RECOVERY = 20;
 
+    private static final int RECOVERY = 20;
     private List<Action> responseActions;
     private int currentCell;
     private StageCell stageCells[];
     private boolean stageCompleted;
     private Hero hero;
 
-    public ActionServiceImpl() {
+    public ActionServiceImpl(StageCell[] map) {
         this.responseActions = new ArrayList<>();
-        this.stageCells = generateStage();
+        this.stageCells = map.clone();
         this.currentCell = 0;
         this.stageCompleted = false;
         this.hero = new Hero();
@@ -42,7 +45,7 @@ public class ActionServiceImpl implements ActionService {
             addAction(ActionEnum.MOVE_FORWARD, 0);
             currentCell++;
         } else {
-            int damage = stageCells[currentCell + 1].getContent().damage();
+            int damage = stageCells[currentCell + 1].getContent().getDamage();
             addAction(ActionEnum.MOVE_FORWARD_REJECTED, damage);
             damageHero(damage);
         }
@@ -52,7 +55,7 @@ public class ActionServiceImpl implements ActionService {
     public void attack() {
 
         if (stageCells[currentCell + 1].getContent() != null) {
-            int damage = stageCells[currentCell + 1].getContent().damage();
+            int damage = stageCells[currentCell + 1].getContent().getDamage();
             addAction(ActionEnum.SHOOT, damage);
             damageHero(damage);
         } else {
@@ -61,7 +64,9 @@ public class ActionServiceImpl implements ActionService {
 
         //clearing next cell if enemy there
         //if player at the last cell adding animation only
-        if (currentCell + 1 < stageCells.length && (stageCells[currentCell + 1].getContent() instanceof Enemy)) {
+        if (currentCell + 1 < stageCells.length
+                && stageCells[currentCell + 1].getContent() != null
+                && (stageCells[currentCell + 1].getContent().getContentType() == ContentType.ENEMY)) {
             stageCells[currentCell + 1].setContent(null);
         }
     }
@@ -77,12 +82,13 @@ public class ActionServiceImpl implements ActionService {
             throw new StageCompletedException();
         } else {
             //cell after next cell is empty
-            if (stageCells[currentCell + 2].getContent() == null && !(stageCells[currentCell + 1].getContent() instanceof Enemy)) {
+            if (stageCells[currentCell + 2].getContent() == null
+                    && !isEnemyAhead()) {
                 addAction(ActionEnum.FLIP_FORWARD, 0);
                 currentCell += 2;
             } else {
                 // smth ahead, hero gets damaged
-                int damage = stageCells[currentCell + 1].getContent().damage();
+                int damage = stageCells[currentCell + 1].getContent().getDamage();
                 addAction(ActionEnum.FLIP_FORWARD_REJECTED, damage);
                 damageHero(damage);
             }
@@ -120,12 +126,16 @@ public class ActionServiceImpl implements ActionService {
 
     @Override
     public boolean isEnemyAhead() {
-        return currentCell + 2 <= stageCells.length && stageCells[currentCell + 1].getContent() instanceof Enemy;
+        return currentCell + 2 <= stageCells.length
+                && stageCells[currentCell + 1].getContent() != null
+                && stageCells[currentCell + 1].getContent().getContentType() == ContentType.ENEMY;
     }
 
     @Override
     public boolean isSpikeAhead() {
-        return currentCell + 2 <= stageCells.length && stageCells[currentCell + 1].getContent() instanceof Spike;
+        return currentCell + 2 <= stageCells.length
+                && stageCells[currentCell + 1].getContent() != null
+                && stageCells[currentCell + 1].getContent().getContentType() == ContentType.SPIKE;
     }
 
     private boolean isHeroAlive() {
@@ -146,16 +156,5 @@ public class ActionServiceImpl implements ActionService {
         responseActions.add(action);
     }
 
-    //TODO: random generation
-    private StageCell[] generateStage() {
-        return new StageCell[]{
-                //First cell always contents null!
-                new StageCell(null),
-                new StageCell(new Spike()),
-                new StageCell(null),
-                new StageCell(new Enemy()),
-                new StageCell(null)
-        };
-    }
 }
 

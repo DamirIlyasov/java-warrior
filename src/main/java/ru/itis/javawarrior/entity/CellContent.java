@@ -1,8 +1,13 @@
 package ru.itis.javawarrior.entity;
 
-/**
- * @author Damir Ilyasov
- */
-public interface CellContent {
-    int damage();
+import lombok.Getter;
+import lombok.Setter;
+import ru.itis.javawarrior.entity.enums.ContentType;
+
+@Setter
+@Getter
+public abstract class CellContent {
+    protected int health;
+    protected int damage;
+    protected ContentType contentType;
 }
