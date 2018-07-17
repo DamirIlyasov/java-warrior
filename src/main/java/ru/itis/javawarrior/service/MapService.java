@@ -1,8 +1,8 @@
 package ru.itis.javawarrior.service;
 
-import ru.itis.javawarrior.entity.StageCell;
+import ru.itis.javawarrior.entity.Stage;
 
 public interface MapService {
-    StageCell[] generateRandomMap();
-    StageCell[] getMapByLevelNumber(Integer levelNumber);
+    Stage generateRandomMap();
+    Stage getMapByLevelNumber(Integer levelNumber);
 }

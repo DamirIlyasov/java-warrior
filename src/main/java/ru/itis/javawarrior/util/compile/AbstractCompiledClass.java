@@ -2,7 +2,7 @@ package ru.itis.javawarrior.util.compile;
 
 
 import ru.itis.javawarrior.entity.GameResult;
-import ru.itis.javawarrior.entity.StageCell;
+import ru.itis.javawarrior.entity.Stage;
 import ru.itis.javawarrior.exception.HeroDiedException;
 import ru.itis.javawarrior.exception.StageCompletedException;
 import ru.itis.javawarrior.exception.TimeOutException;
@@ -26,7 +26,7 @@ public abstract class AbstractCompiledClass implements Runner {
     @Override
     public GameResult main(Integer levelNumber) {
         mapService = new MapServiceImpl();
-        StageCell[] map = mapService.getMapByLevelNumber(levelNumber);
+        Stage map = mapService.getMapByLevelNumber(levelNumber);
         actionService = new ActionServiceImpl(map);
         try {
             int count = 0;
