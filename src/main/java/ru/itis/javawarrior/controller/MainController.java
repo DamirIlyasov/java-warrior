@@ -16,6 +16,8 @@ import ru.itis.javawarrior.service.MapService;
 import ru.itis.javawarrior.service.ValidateService;
 import ru.itis.javawarrior.util.ban.Validation;
 
+import java.security.Principal;
+
 /**
  * @author Damir Ilyasov
  */
@@ -62,5 +64,10 @@ public class MainController {
     public ResponseEntity<StageCell[]> getMapByNumber(@PathVariable(name = "number") Integer number) {
         Stage map = mapService.getMapByLevelNumber(number);
         return new ResponseEntity<>(map.getCells(), HttpStatus.OK);
+    }
+
+    @RequestMapping("/user")
+    public Principal user(Principal principal) {
+        return principal;
     }
 }
