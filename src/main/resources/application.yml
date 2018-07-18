@@ -9,6 +9,9 @@ security:
             authenticationScheme: query
             clientAuthenticationScheme: form
             scope: profile
+            pre-established-redirect-uri: http://localhost:8080/user
+            registered-redirect-uri: http://localhost:8080/user
+            use-current-uri: false
         resource:
             userInfoUri:  https://www.googleapis.com/oauth2/v3/userinfo
             preferTokenInfo: false

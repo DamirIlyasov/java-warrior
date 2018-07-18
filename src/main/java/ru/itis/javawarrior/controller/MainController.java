@@ -70,4 +70,9 @@ public class MainController {
     public Principal user(Principal principal) {
         return principal;
     }
+
+    @RequestMapping("/login")
+    public String login() {
+        return "Hello";
+    }
 }
