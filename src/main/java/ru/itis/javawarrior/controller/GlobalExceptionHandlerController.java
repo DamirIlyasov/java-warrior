@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-import ru.itis.javawarrior.entity.GameResult;
+import ru.itis.javawarrior.dto.GameResult;
 import ru.itis.javawarrior.exception.ValidateCodeException;
 
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
@@ -23,6 +23,7 @@ public class GlobalExceptionHandlerController extends ResponseEntityExceptionHan
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<GameResult> exception(Exception e) {
+        e.printStackTrace();
         return new ResponseEntity<>(new GameResult(null, null, false, e.getMessage()), INTERNAL_SERVER_ERROR);
     }
 }

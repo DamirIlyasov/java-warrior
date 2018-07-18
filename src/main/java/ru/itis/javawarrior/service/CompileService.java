@@ -1,6 +1,6 @@
 package ru.itis.javawarrior.service;
 
-import ru.itis.javawarrior.entity.GameResult;
+import ru.itis.javawarrior.dto.GameResult;
 
 /**
  * @author Damir Ilyasov

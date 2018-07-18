@@ -1,7 +1,7 @@
 package ru.itis.javawarrior.util.compile;
 
 
-import ru.itis.javawarrior.entity.GameResult;
+import ru.itis.javawarrior.dto.GameResult;
 import ru.itis.javawarrior.entity.Stage;
 import ru.itis.javawarrior.exception.HeroDiedException;
 import ru.itis.javawarrior.exception.StageCompletedException;
@@ -38,6 +38,7 @@ public abstract class AbstractCompiledClass implements Runner {
             //тип если герой не умер и не выиграл
             throw new TimeOutException();
         } catch (StageCompletedException e) {
+
             return new GameResult(e.getMessage(), actionService.getActions(), true, "");
         } catch (HeroDiedException | TimeOutException e) {
             return new GameResult(e.getMessage(), actionService.getActions(), false, "");
