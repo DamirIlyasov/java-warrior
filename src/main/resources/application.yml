@@ -9,8 +9,8 @@ security:
             authenticationScheme: query
             clientAuthenticationScheme: form
             scope: profile
-            pre-established-redirect-uri: http://localhost:9090/login
-            registered-redirect-uri: http://localhost:9090/login
+            pre-established-redirect-uri: http://89.223.91.62.xip.io:9090/login
+            registered-redirect-uri: http://89.223.91.62.xip.io:9090/login
             use-current-uri: false
         resource:
             userInfoUri:  https://www.googleapis.com/oauth2/v3/userinfo
