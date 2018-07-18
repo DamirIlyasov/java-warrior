@@ -3,6 +3,7 @@ package ru.itis.javawarrior.service.impl;
 import lombok.Getter;
 import ru.itis.javawarrior.entity.Action;
 import ru.itis.javawarrior.entity.Hero;
+import ru.itis.javawarrior.entity.Stage;
 import ru.itis.javawarrior.entity.StageCell;
 import ru.itis.javawarrior.entity.enums.ActionEnum;
 import ru.itis.javawarrior.entity.enums.ContentType;
@@ -26,9 +27,9 @@ public class ActionServiceImpl implements ActionService {
     private boolean stageCompleted;
     private Hero hero;
 
-    public ActionServiceImpl(StageCell[] map) {
+    public ActionServiceImpl(Stage map) {
         this.responseActions = new ArrayList<>();
-        this.stageCells = map.clone();
+        this.stageCells = map.getCells();
         this.currentCell = 0;
         this.stageCompleted = false;
         this.hero = new Hero();

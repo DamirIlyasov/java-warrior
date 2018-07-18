@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.itis.javawarrior.entity.GameResult;
+import ru.itis.javawarrior.entity.Stage;
 import ru.itis.javawarrior.entity.StageCell;
 import ru.itis.javawarrior.exception.ValidateCodeException;
 import ru.itis.javawarrior.json.CompileJson;
@@ -59,7 +60,7 @@ public class MainController {
 
     @GetMapping("/level/{number}")
     public ResponseEntity<StageCell[]> getMapByNumber(@PathVariable(name = "number") Integer number) {
-        StageCell[] map = mapService.getMapByLevelNumber(number);
-        return new ResponseEntity<>(map, HttpStatus.OK);
+        Stage map = mapService.getMapByLevelNumber(number);
+        return new ResponseEntity<>(map.getCells(), HttpStatus.OK);
     }
 }

@@ -1,8 +1,9 @@
 package ru.itis.javawarrior.entity;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 /**
  * @author Damir Ilyasov
@@ -15,4 +16,9 @@ public class Stage {
     public Stage(StageCell[] cells) {
         this.cells = cells;
     }
+
+    public Stage(List<StageCell> cells){
+        this.cells = cells.toArray(new StageCell[cells.size()]);
+    }
+
 }

@@ -1,30 +1,45 @@
 package ru.itis.javawarrior.service.impl;
 
 import org.springframework.stereotype.Service;
-import ru.itis.javawarrior.entity.Level;
+import ru.itis.javawarrior.entity.Enemy;
+import ru.itis.javawarrior.entity.Spike;
+import ru.itis.javawarrior.entity.Stage;
 import ru.itis.javawarrior.entity.StageCell;
+import ru.itis.javawarrior.entity.enums.ContentType;
 import ru.itis.javawarrior.service.MapService;
+import ru.itis.javawarrior.util.Level;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class MapServiceImpl implements MapService {
 
     //TODO RandomGenerator
     @Override
-    public StageCell[] generateRandomMap() {
-        return new StageCell[0];
+    public Stage generateRandomMap() {
+        return new Stage(new StageCell[0]);
     }
 
     @Override
-    public StageCell[] getMapByLevelNumber(Integer levelNumber) {
-        switch (levelNumber) {
-            case 1:
-                return Level.FIRST_LEVEL;
-            case 2:
-                return Level.SECOND_LEVEL;
-            case 3:
-                return Level.THIRD_LEVEL;
+    public Stage getMapByLevelNumber(Integer levelNumber) {
+        ContentType[] template = Level.getStageTemplate(levelNumber);
+        List<StageCell> stageCells = Arrays.stream(template).map(this::transformToStageCell).collect(Collectors.toList());
+        return new Stage(stageCells);
+    }
+
+
+    private StageCell transformToStageCell(ContentType contentType) {
+        switch (contentType) {
+            case EMPTY:
+                return new StageCell(null);
+            case ENEMY:
+                return new StageCell(new Enemy());
+            case SPIKE:
+                return new StageCell(new Spike());
             default:
-                return generateRandomMap();
+                return new StageCell(null);
         }
     }
 }
