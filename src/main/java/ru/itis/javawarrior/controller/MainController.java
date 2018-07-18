@@ -66,13 +66,8 @@ public class MainController {
         return new ResponseEntity<>(map.getCells(), HttpStatus.OK);
     }
 
-    @RequestMapping("/user")
-    public Principal user(Principal principal) {
-        return principal;
-    }
-
-    @RequestMapping("/login")
-    public String login() {
-        return "Hello";
+    @GetMapping("/user")
+    public ResponseEntity<Principal> user(Principal principal) {
+        return new ResponseEntity<>(principal, HttpStatus.OK);
     }
 }
