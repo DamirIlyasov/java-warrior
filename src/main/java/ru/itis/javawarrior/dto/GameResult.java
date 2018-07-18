@@ -1,8 +1,9 @@
-package ru.itis.javawarrior.entity;
+package ru.itis.javawarrior.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import ru.itis.javawarrior.entity.Action;
 
 import java.util.List;
 

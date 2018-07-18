@@ -1,12 +1,12 @@
-package ru.itis.javawarrior.dao.impl;
+package ru.itis.javawarrior.db.dao.impl;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import ru.itis.javawarrior.dao.BaseDAO;
-import ru.itis.javawarrior.model.BaseEntity;
+import ru.itis.javawarrior.db.dao.BaseDAO;
+import ru.itis.javawarrior.db.model.BaseEntity;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
@@ -23,6 +23,11 @@ public class BaseDAOImpl implements BaseDAO {
     @Override
     public <T extends BaseEntity> T findById(Class<T> clazz, Long id) {
         return entityManager.unwrap(Session.class).get(clazz, id);
+    }
+
+    @Override
+    public <T extends BaseEntity> T findByEmail(Class<T> clazz, String email) {
+        return (T) entityManager.unwrap(Session.class).createQuery("SELECT o FROM " + clazz.getName() + " o where o.email = " + "'" + email + "'").uniqueResult();
     }
 
     @Override

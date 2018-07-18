@@ -2,7 +2,7 @@ package ru.itis.javawarrior.service.impl;
 
 import net.openhft.compiler.CompilerUtils;
 import org.springframework.stereotype.Service;
-import ru.itis.javawarrior.entity.GameResult;
+import ru.itis.javawarrior.dto.GameResult;
 import ru.itis.javawarrior.service.CompileService;
 import ru.itis.javawarrior.util.compile.CompileParts;
 import ru.itis.javawarrior.util.compile.Runner;

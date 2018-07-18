@@ -9,6 +9,11 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Qualifier("userInfoTokenServices")
+    @Autowired
+    private ResourceServerTokenServices tokenServices;
+
+
     private static final String[] AUTH_WHITELIST = {
             // -- swagger ui
             "/v2/api-docs",
@@ -33,6 +38,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .antMatchers("/compile**", "/user**", "/level**")
                 .authenticated()
-                .anyRequest().authenticated();
+                .anyRequest().authenticated()
+                .and()
+                .addFilterBefore(new ApiTokenAccessFilter(tokenServices), AbstractPreAuthenticatedProcessingFilter.class);
     }
 }
