@@ -20,7 +20,7 @@ public class SwaggerConfig {
     public Docket newsApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("ru.itis.javawarrior.controller"))
+                .apis(RequestHandlerSelectors.basePackage("ru.itis.javawarrior"))
                 .paths(PathSelectors.any())
                 .build()
                 .apiInfo(apiInfo());

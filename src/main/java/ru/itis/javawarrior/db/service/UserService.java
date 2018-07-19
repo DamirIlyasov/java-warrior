@@ -1,16 +1,15 @@
 package ru.itis.javawarrior.db.service;
 
-import ru.itis.javawarrior.db.model.User;
+import ru.itis.javawarrior.db.model.AppUser;
 
 public interface UserService {
 
-    void save(User user);
+    void save(AppUser user);
 
     void delete(Long id);
 
-    User findById(Long id);
+    AppUser findById(Long id);
 
-    User findByEmail(String email);
+    AppUser findByEmail(String email);
 
-    User verifyUser(String email, String name);
 }

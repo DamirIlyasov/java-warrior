@@ -14,8 +14,10 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @Entity
 @Table(name = "users")
-public class User extends BaseEntity {
+public class AppUser extends BaseEntity {
     private String name;
     private String email;
+    private String password;
     private Long level;
+
 }
