@@ -1,9 +1,15 @@
 package ru.itis.javawarrior.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import ru.itis.javawarrior.db.model.AppUser;
+import ru.itis.javawarrior.db.service.UserService;
+import ru.itis.javawarrior.dto.UserDto;
+import ru.itis.javawarrior.util.BeanUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,22 +21,47 @@ import static java.util.Collections.emptyList;
 /**
  * @author lnurullina
  */
-class TokenAuthenticationService {
+public class TokenAuthenticationService {
     static final long EXPIRATIONTIME = 864_000_000; // 10 days
     static final String SECRET = "ThisIsASecret";
     static final String HEADER_STRING = "Authorization";
+    private UserService userService;
 
-    static void addAuthentication(HttpServletResponse res, String username) {
+    TokenAuthenticationService() {
+        userService = BeanUtil.getBean(UserService.class);
+    }
+
+    void addAuthentication(HttpServletResponse res, String username) {
         String JWT = Jwts.builder()
                 .setSubject(username)
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATIONTIME))
                 .signWith(SignatureAlgorithm.HS512, SECRET)
                 .compact();
+
+
+        AppUser user = userService.findByEmail(username);
+        UserDto userDto = new UserDto(username,
+                user.getLevel(),
+                JWT);
         try {
-            res.getWriter().write(JWT);
+            res.setContentType("application/json");
+            res.setCharacterEncoding("UTF-8");
+            ObjectMapper objectMapper = new ObjectMapper();
+            res.getWriter().write(objectMapper.writeValueAsString(userDto));
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static String addAuthenticationAfterSignUp(String username, HttpServletResponse res) {
+        String JWT = Jwts.builder()
+                .setSubject(username)
+                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATIONTIME))
+                .signWith(SignatureAlgorithm.HS512, SECRET)
+                .compact();
+        SecurityContextHolder.getContext()
+                .setAuthentication(new UsernamePasswordAuthenticationToken(username, null, emptyList()));
+        return JWT;
     }
 
     static Authentication getAuthentication(HttpServletRequest request) {

@@ -34,7 +34,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/error**",
             "/sign_in**",
             "/sign_in/**",
-            "/sign_in"
+            "/sign_in",
+            "/sign_up"
     };
 
     private UserDetailsService userDetailsService;

@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import ru.itis.javawarrior.config.TokenAuthenticationService;
 import ru.itis.javawarrior.db.model.AppUser;
 import ru.itis.javawarrior.db.service.UserService;
 import ru.itis.javawarrior.dto.GameResult;
 import ru.itis.javawarrior.dto.SignUpDto;
+import ru.itis.javawarrior.dto.UserDto;
 import ru.itis.javawarrior.entity.Stage;
 import ru.itis.javawarrior.entity.StageCell;
 import ru.itis.javawarrior.exception.ValidateCodeException;
@@ -27,6 +29,9 @@ import ru.itis.javawarrior.service.CompileService;
 import ru.itis.javawarrior.service.MapService;
 import ru.itis.javawarrior.service.ValidateService;
 import ru.itis.javawarrior.util.ban.Validation;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * @author Damir Ilyasov
@@ -90,11 +95,16 @@ public class MainController {
     }
 
     @PostMapping("/sign_up")
-    public void signUp(@RequestBody SignUpDto signUpDto) {
+    public UserDto signUp(@RequestBody SignUpDto signUpDto, HttpServletResponse response) throws IOException {
         AppUser user = new AppUser();
         user.setLevel(1L);
         user.setEmail(signUpDto.getLogin());
         user.setPassword(encoder.encode(signUpDto.getPassword()));
         userService.save(user);
+        UserDto userDto = new UserDto(signUpDto.getLogin(),
+                1L,
+                TokenAuthenticationService.addAuthenticationAfterSignUp(user.getEmail(), response)
+        );
+        return userDto;
     }
 }
