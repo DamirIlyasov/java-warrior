@@ -1,6 +1,7 @@
 package ru.itis.javawarrior.db.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -43,5 +44,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         AppUser user = findByEmail(s);
         return new User(user.getEmail(), user.getPassword(), emptyList());
+    }
+
+    @Override
+    public AppUser getCurrentUser(){
+        return findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
     }
 }

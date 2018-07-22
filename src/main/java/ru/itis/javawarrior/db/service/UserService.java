@@ -12,4 +12,5 @@ public interface UserService {
 
     AppUser findByEmail(String email);
 
+    AppUser getCurrentUser();
 }

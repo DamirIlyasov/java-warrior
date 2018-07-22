@@ -1,7 +1,9 @@
 package ru.itis.javawarrior.service.impl;
 
 import net.openhft.compiler.CompilerUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.itis.javawarrior.db.service.UserService;
 import ru.itis.javawarrior.dto.GameResult;
 import ru.itis.javawarrior.service.CompileService;
 import ru.itis.javawarrior.util.compile.CompileParts;
@@ -12,8 +14,11 @@ import ru.itis.javawarrior.util.compile.Runner;
 public class CompileServiceImpl implements CompileService {
     private int operationNumber = 0;
 
+    @Autowired
+    private UserService userService;
+
     @Override
-    public GameResult compile(String inputCode, Integer levelNumber) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
+    public GameResult compile(String inputCode) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
         String className = "ru.itis.javawarrior.util.compile.CompiledClass" + operationNumber;
         GameResult response = null;
         Runner runner;
@@ -28,7 +33,7 @@ public class CompileServiceImpl implements CompileService {
         if (aClass != null) {
             runner = (Runner) aClass.newInstance();
             if (runner != null) {
-                response = runner.main(levelNumber);
+                response = runner.main(userService.getCurrentUser().getMap());
             }
         }
 

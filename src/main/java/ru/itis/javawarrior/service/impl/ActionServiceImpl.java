@@ -7,6 +7,7 @@ import ru.itis.javawarrior.entity.enums.ContentType;
 import ru.itis.javawarrior.exception.HeroDiedException;
 import ru.itis.javawarrior.exception.StageCompletedException;
 import ru.itis.javawarrior.service.ActionService;
+import ru.itis.javawarrior.service.MapService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,8 +24,12 @@ public class ActionServiceImpl implements ActionService {
     private StageCell stageCells[];
     private boolean stageCompleted;
     private Hero hero;
+    private MapService mapService;
 
-    public ActionServiceImpl(Stage map) {
+    public ActionServiceImpl(StageTemplate currentLevelTemplate) {
+        mapService = new MapServiceImpl();
+        Stage map = mapService.createStageByTemplate(currentLevelTemplate);
+
         this.responseActions = new ArrayList<>();
         this.stageCells = map.getCells();
         this.currentCell = 0;
