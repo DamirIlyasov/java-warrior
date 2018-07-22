@@ -1,10 +1,7 @@
 package ru.itis.javawarrior.service.impl;
 
 import lombok.Getter;
-import ru.itis.javawarrior.entity.Action;
-import ru.itis.javawarrior.entity.Hero;
-import ru.itis.javawarrior.entity.Stage;
-import ru.itis.javawarrior.entity.StageCell;
+import ru.itis.javawarrior.entity.*;
 import ru.itis.javawarrior.entity.enums.ActionEnum;
 import ru.itis.javawarrior.entity.enums.ContentType;
 import ru.itis.javawarrior.exception.HeroDiedException;
@@ -42,7 +39,7 @@ public class ActionServiceImpl implements ActionService {
             addAction(ActionEnum.MOVE_FORWARD, 0);
             throw new StageCompletedException();
         }
-        if (stageCells[currentCell + 1].getContent() == null) {
+        if (stageCells[currentCell + 1].getContent().getContentType() == ContentType.EMPTY) {
             addAction(ActionEnum.MOVE_FORWARD, 0);
             currentCell++;
         } else {
@@ -55,7 +52,7 @@ public class ActionServiceImpl implements ActionService {
     @Override
     public void attack() {
 
-        if (stageCells[currentCell + 1].getContent() != null) {
+        if (stageCells[currentCell + 1].getContent().getContentType() != ContentType.EMPTY) {
             int damage = stageCells[currentCell + 1].getContent().getDamage();
             addAction(ActionEnum.SHOOT, damage);
             damageHero(damage);
@@ -66,9 +63,9 @@ public class ActionServiceImpl implements ActionService {
         //clearing next cell if enemy there
         //if player at the last cell adding animation only
         if (currentCell + 1 < stageCells.length
-                && stageCells[currentCell + 1].getContent() != null
+                && stageCells[currentCell + 1].getContent().getContentType() != ContentType.EMPTY
                 && (stageCells[currentCell + 1].getContent().getContentType() == ContentType.ENEMY)) {
-            stageCells[currentCell + 1].setContent(null);
+            stageCells[currentCell + 1].setContent(new Empty());
         }
     }
 
@@ -83,7 +80,7 @@ public class ActionServiceImpl implements ActionService {
             throw new StageCompletedException();
         } else {
             //cell after next cell is empty
-            if (stageCells[currentCell + 2].getContent() == null
+            if (stageCells[currentCell + 2].getContent().getContentType() == ContentType.EMPTY
                     && !isEnemyAhead()) {
                 addAction(ActionEnum.FLIP_FORWARD, 0);
                 currentCell += 2;
@@ -128,14 +125,14 @@ public class ActionServiceImpl implements ActionService {
     @Override
     public boolean isEnemyAhead() {
         return currentCell + 2 <= stageCells.length
-                && stageCells[currentCell + 1].getContent() != null
+                && stageCells[currentCell + 1].getContent().getContentType() != ContentType.EMPTY
                 && stageCells[currentCell + 1].getContent().getContentType() == ContentType.ENEMY;
     }
 
     @Override
     public boolean isSpikeAhead() {
         return currentCell + 2 <= stageCells.length
-                && stageCells[currentCell + 1].getContent() != null
+                && stageCells[currentCell + 1].getContent().getContentType() != ContentType.EMPTY
                 && stageCells[currentCell + 1].getContent().getContentType() == ContentType.SPIKE;
     }
 
