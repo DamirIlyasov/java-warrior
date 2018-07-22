@@ -8,13 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.itis.javawarrior.config.TokenAuthenticationService;
 import ru.itis.javawarrior.db.model.AppUser;
 import ru.itis.javawarrior.db.service.UserService;
@@ -22,7 +16,6 @@ import ru.itis.javawarrior.dto.GameResult;
 import ru.itis.javawarrior.dto.SignUpDto;
 import ru.itis.javawarrior.dto.UserDto;
 import ru.itis.javawarrior.entity.Stage;
-import ru.itis.javawarrior.entity.StageCell;
 import ru.itis.javawarrior.exception.ValidateCodeException;
 import ru.itis.javawarrior.json.CompileJson;
 import ru.itis.javawarrior.service.CompileService;
@@ -32,6 +25,8 @@ import ru.itis.javawarrior.util.ban.Validation;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+
+import static java.lang.Math.toIntExact;
 
 /**
  * @author Damir Ilyasov
@@ -70,13 +65,12 @@ public class MainController {
 
     @ApiImplicitParam(name = "Authorization", paramType = "header", required = true, dataType = "string")
     @PostMapping("/compile")
-    public ResponseEntity<GameResult> testCompile(@RequestBody CompileJson compileJson,
-                                                  @RequestParam(name = "level_number") Integer levelNumber) throws IllegalAccessException, InstantiationException, ClassNotFoundException {
+    public ResponseEntity<GameResult> testCompile(@RequestBody CompileJson compileJson) throws IllegalAccessException, InstantiationException, ClassNotFoundException {
         Validation validation = validateService.validate(compileJson.getInputtedCode());
         if (!validation.isValid()) {
             throw new ValidateCodeException(validation.getMessage());
         }
-        GameResult result = compileService.compile(compileJson.getInputtedCode(), levelNumber);
+        GameResult result = compileService.compile(compileJson.getInputtedCode(), toIntExact(getCurrentUser().getLevel()));
         if (result.isStageCompleted()) {
             AppUser user = userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
             if (user.getLevel() < 4) {
@@ -88,10 +82,11 @@ public class MainController {
     }
 
     @ApiImplicitParam(name = "Authorization", paramType = "header", required = true, dataType = "string")
-    @GetMapping("/level/{number}")
-    public ResponseEntity<StageCell[]> getMapByNumber(@PathVariable(name = "number") Integer number) {
-        Stage map = mapService.getMapByLevelNumber(number);
-        return new ResponseEntity<>(map.getCells(), HttpStatus.OK);
+    @GetMapping("/level")
+    public ResponseEntity<Stage> getMapByNumber() {
+        long number = getCurrentUser().getLevel();
+        Stage map = mapService.getMapByLevelNumber(toIntExact(number));
+        return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
     @PostMapping("/sign_up")
@@ -106,5 +101,9 @@ public class MainController {
                 TokenAuthenticationService.addAuthenticationAfterSignUp(user.getEmail(), response)
         );
         return userDto;
+    }
+
+    private AppUser getCurrentUser(){
+        return userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
     }
 }
