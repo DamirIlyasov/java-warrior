@@ -2,14 +2,12 @@ package ru.itis.javawarrior.util.compile;
 
 
 import ru.itis.javawarrior.dto.GameResult;
-import ru.itis.javawarrior.entity.Stage;
+import ru.itis.javawarrior.entity.StageTemplate;
 import ru.itis.javawarrior.exception.HeroDiedException;
 import ru.itis.javawarrior.exception.StageCompletedException;
 import ru.itis.javawarrior.exception.TimeOutException;
 import ru.itis.javawarrior.service.ActionService;
-import ru.itis.javawarrior.service.MapService;
 import ru.itis.javawarrior.service.impl.ActionServiceImpl;
-import ru.itis.javawarrior.service.impl.MapServiceImpl;
 
 /**
  * Класс для хранения методов, которые должен вызывать компилированный класс,
@@ -21,13 +19,10 @@ public abstract class AbstractCompiledClass implements Runner {
     private boolean isActionMade;
 
     protected ActionService actionService;
-    private MapService mapService;
 
     @Override
-    public GameResult main(Integer levelNumber) {
-        mapService = new MapServiceImpl();
-        Stage map = mapService.getMapByLevelNumber(levelNumber);
-        actionService = new ActionServiceImpl(map);
+    public GameResult main(StageTemplate template) {
+        actionService = new ActionServiceImpl(template);
         try {
             int count = 0;
             while (count != AVAILABLE_ITERATIONS_NUMBER) {

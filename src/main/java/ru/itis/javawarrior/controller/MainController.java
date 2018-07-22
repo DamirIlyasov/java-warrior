@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import ru.itis.javawarrior.config.TokenAuthenticationService;
@@ -16,6 +15,7 @@ import ru.itis.javawarrior.dto.GameResult;
 import ru.itis.javawarrior.dto.SignUpDto;
 import ru.itis.javawarrior.dto.UserDto;
 import ru.itis.javawarrior.entity.Stage;
+import ru.itis.javawarrior.entity.StageTemplate;
 import ru.itis.javawarrior.exception.ValidateCodeException;
 import ru.itis.javawarrior.json.CompileJson;
 import ru.itis.javawarrior.service.CompileService;
@@ -70,9 +70,9 @@ public class MainController {
         if (!validation.isValid()) {
             throw new ValidateCodeException(validation.getMessage());
         }
-        GameResult result = compileService.compile(compileJson.getInputtedCode(), toIntExact(getCurrentUser().getLevel()));
+        GameResult result = compileService.compile(compileJson.getInputtedCode());
         if (result.isStageCompleted()) {
-            AppUser user = userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+            AppUser user = userService.getCurrentUser();
             if (user.getLevel() < 4) {
                 user.setLevel(user.getLevel() + 1);
             }
@@ -84,9 +84,16 @@ public class MainController {
     @ApiImplicitParam(name = "Authorization", paramType = "header", required = true, dataType = "string")
     @GetMapping("/level")
     public ResponseEntity<Stage> getMapByNumber() {
-        long number = getCurrentUser().getLevel();
-        Stage map = mapService.getMapByLevelNumber(toIntExact(number));
-        return new ResponseEntity<>(map, HttpStatus.OK);
+        AppUser currentUser = userService.getCurrentUser();
+        StageTemplate map;
+        if (currentUser.getLevel() >= 4) {
+            map = mapService.generateRandomMapTemplate();
+        } else {
+            map = mapService.getMapTemplateByLevelNumber(toIntExact(currentUser.getLevel()));
+        }
+        currentUser.setMap(map);
+        userService.save(currentUser);
+        return new ResponseEntity<>(mapService.createStageByTemplate(map), HttpStatus.OK);
     }
 
     @PostMapping("/sign_up")
@@ -103,7 +110,4 @@ public class MainController {
         return userDto;
     }
 
-    private AppUser getCurrentUser(){
-        return userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
-    }
 }
