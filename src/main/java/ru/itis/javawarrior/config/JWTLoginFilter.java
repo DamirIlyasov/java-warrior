@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.util.Collections;
 
 /**
- * @author lnurullina
+ * @author lnurullina molodez
  */
 public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
 
