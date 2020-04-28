@@ -25,7 +25,7 @@ public class RandomGeneratorServiceImpl implements RandomGeneratorService {
         StageTemplate template = new StageTemplate();
         template.setNumber(number);
         template.setDescription(getDescription());
-        template.setContentTypes(tiles.toArray(new ContentType[tiles.size()]));
+        template.setContentTypes(tiles.toArray(new ContentType[0]));
         System.out.println(getDescription());
         return template;
     }

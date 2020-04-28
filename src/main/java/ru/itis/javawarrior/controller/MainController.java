@@ -4,11 +4,13 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import ru.itis.javawarrior.config.TokenAuthenticationService;
+import ru.itis.javawarrior.controller.constants.Params;
+import ru.itis.javawarrior.controller.constants.RequestDescriptions;
+import ru.itis.javawarrior.controller.constants.Urls;
 import ru.itis.javawarrior.db.model.AppUser;
 import ru.itis.javawarrior.db.service.UserService;
 import ru.itis.javawarrior.dto.GameResult;
@@ -24,7 +26,6 @@ import ru.itis.javawarrior.service.ValidateService;
 import ru.itis.javawarrior.util.ban.Validation;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 import static java.lang.Math.toIntExact;
 
@@ -46,25 +47,10 @@ public class MainController {
     @Autowired
     private BCryptPasswordEncoder encoder;
 
-    @ApiOperation("Index page")
-    @GetMapping("/")
-    public ResponseEntity<String> index() {
-        return new ResponseEntity<>("Server online!", HttpStatus.OK);
-    }
-
     @CrossOrigin
-    @ApiOperation("Available actions:\n" +
-            "    walk();\n" +
-            "    attack();\n" +
-            "    jump();\n" +
-            "    rest();\n" +
-            "    health();\n" +
-            "    enemyAhead();\n" +
-            "    spikesAhead();"
-    )
-
-    @ApiImplicitParam(name = "Authorization", paramType = "header", required = true, dataType = "string")
-    @PostMapping("/compile")
+    @ApiOperation(RequestDescriptions.COMPILE)
+    @ApiImplicitParam(name = Params.Header.AUTHORIZATION, paramType = "header", required = true)
+    @PostMapping(Urls.COMPILE)
     public ResponseEntity<GameResult> testCompile(@RequestBody CompileJson compileJson) throws IllegalAccessException, InstantiationException, ClassNotFoundException {
         Validation validation = validateService.validate(compileJson.getInputtedCode());
         if (!validation.isValid()) {
@@ -78,11 +64,12 @@ public class MainController {
             }
             userService.save(user);
         }
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        return ResponseEntity.ok(result);
     }
 
-    @ApiImplicitParam(name = "Authorization", paramType = "header", required = true, dataType = "string")
-    @GetMapping("/level")
+    @ApiImplicitParam(name = Params.Header.AUTHORIZATION, paramType = "header", required = true)
+    @ApiOperation(RequestDescriptions.LEVEL)
+    @GetMapping(Urls.LEVEL)
     public ResponseEntity<Stage> getMapByNumber() {
         AppUser currentUser = userService.getCurrentUser();
         StageTemplate map;
@@ -93,21 +80,21 @@ public class MainController {
         }
         currentUser.setMap(map);
         userService.save(currentUser);
-        return new ResponseEntity<>(mapService.createStageByTemplate(map), HttpStatus.OK);
+        return ResponseEntity.ok(mapService.createStageByTemplate(map));
     }
 
-    @PostMapping("/sign_up")
-    public UserDto signUp(@RequestBody SignUpDto signUpDto, HttpServletResponse response) throws IOException {
+    @ApiOperation(RequestDescriptions.SIGN_UP)
+    @PostMapping(Urls.SIGN_UP)
+    public UserDto signUp(@RequestBody SignUpDto signUpDto, HttpServletResponse response) {
         AppUser user = new AppUser();
         user.setLevel(1L);
         user.setEmail(signUpDto.getLogin());
         user.setPassword(encoder.encode(signUpDto.getPassword()));
         userService.save(user);
-        UserDto userDto = new UserDto(signUpDto.getLogin(),
+        return new UserDto(signUpDto.getLogin(),
                 1L,
                 TokenAuthenticationService.addAuthenticationAfterSignUp(user.getEmail(), response)
         );
-        return userDto;
     }
 
 }

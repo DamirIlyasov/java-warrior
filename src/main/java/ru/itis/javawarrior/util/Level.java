@@ -34,11 +34,6 @@ public class Level {
     public static StageTemplate getStageTemplate(Integer stageNumber) {
         StageTemplate template = new StageTemplate();
         switch (stageNumber) {
-            case 1:
-                template.setNumber(1);
-                template.setContentTypes(FIRST_LEVEL_TEMPLATE);
-                template.setDescription("Твоя первая миссия, новобранец. Тебе повезло, сегодня без неприятностей, просто патруль.");
-                break;
             case 2:
                 template.setNumber(2);
                 template.setContentTypes(SECOND_LEVEL_TEMPLATE);

@@ -1,4 +1,5 @@
 package ru.itis.javawarrior.config;
+
 import com.fasterxml.classmate.TypeResolver;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
@@ -15,7 +16,7 @@ import springfox.documentation.spring.web.readers.operation.CachingOperationName
 import springfox.documentation.swagger.common.SwaggerPluginSupport;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 /**
  * @author lnurullina
@@ -31,18 +32,18 @@ public class ApiListingScannerPluginImpl implements ApiListingScannerPlugin {
     @Override
     public List<ApiDescription> apply(DocumentationContext context) {
         return new ArrayList<>(
-                Arrays.asList(
+                Collections.singletonList(
                         new ApiDescription(
                                 "/sign_in",
                                 "Get token for login",
-                                Arrays.asList(
+                                Collections.singletonList(
                                         new OperationBuilder(
                                                 new CachingOperationNameGenerator())
-                                                .authorizations(new ArrayList())
+                                                .authorizations(new ArrayList<>())
                                                 .codegenMethodNameStem("basicAuth0001")
                                                 .method(HttpMethod.POST)
                                                 .parameters(
-                                                        Arrays.asList(
+                                                        Collections.singletonList(
                                                                 new ParameterBuilder()
                                                                         .description("Login")
                                                                         .type(new TypeResolver().resolve(SignUpDto.class))

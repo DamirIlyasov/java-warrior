@@ -36,23 +36,22 @@ public class BaseDAOImpl implements BaseDAO {
     }
 
     @Override
-    public Long save(BaseEntity o) {
-        return (Long) entityManager.unwrap(Session.class).save(o);
+    public void save(BaseEntity o) {
+        entityManager.unwrap(Session.class).save(o);
     }
 
     @Override
-    public <T extends BaseEntity> T delete(Class<T> clazz, Long id) {
+    public <T extends BaseEntity> void delete(Class<T> clazz, Long id) {
         T o = findById(clazz, id);
         if (o != null) {
             entityManager.unwrap(Session.class).delete(o);
         } else {
             throw new EntityNotFoundException();
         }
-        return o;
     }
 
     @Override
-    public <T> List<T> getList(Class<T> clazz) {
+    public <T> List getList(Class<T> clazz) {
         Criteria criteria = getCriteria(clazz);
         if (BaseEntity.class.isAssignableFrom(clazz)) {
             criteria.addOrder(Order.desc("id"));

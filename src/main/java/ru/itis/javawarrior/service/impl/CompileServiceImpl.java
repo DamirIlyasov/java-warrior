@@ -14,17 +14,20 @@ import ru.itis.javawarrior.util.compile.Runner;
 public class CompileServiceImpl implements CompileService {
     private int operationNumber = 0;
 
+    private static final String CLASS_NAME = "ru.itis.javawarrior.util.compile.CompiledClass";
+    private static final String COMPILED_CLASS = "CompiledClass";
+
     @Autowired
     private UserService userService;
 
     @Override
     public GameResult compile(String inputCode) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
-        String className = "ru.itis.javawarrior.util.compile.CompiledClass" + operationNumber;
+        String className = CLASS_NAME + operationNumber;
         GameResult response = null;
         Runner runner;
         String classCode = CompileParts.BEGINNING_OF_CODE_1_PART +
                 //TODO: think about it, smells like shit, but works
-                "CompiledClass" + operationNumber +
+                COMPILED_CLASS + operationNumber +
                 CompileParts.BEGINNING_OF_CODE_2_PART +
                 inputCode +
                 CompileParts.ENDING_OF_CODE;

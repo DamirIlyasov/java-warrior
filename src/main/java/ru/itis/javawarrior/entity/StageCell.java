@@ -1,6 +1,8 @@
 package ru.itis.javawarrior.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -8,10 +10,8 @@ import lombok.Setter;
  */
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class StageCell {
     private CellContent content;
-
-    public StageCell(CellContent content) {
-        this.content = content;
-    }
 }

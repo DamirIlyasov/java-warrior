@@ -22,9 +22,11 @@ import static java.util.Collections.emptyList;
  * @author lnurullina
  */
 public class TokenAuthenticationService {
-    static final long EXPIRATIONTIME = 864_000_000; // 10 days
-    static final String SECRET = "ThisIsASecret";
-    static final String HEADER_STRING = "Authorization";
+    private static final long EXPIRATIONTIME = 864_000_000; // 10 days
+    private static final String SECRET = "ThisIsASecret";
+    private static final String HEADER_STRING = "Authorization";
+    private static final String APPLICATION_JSON = "application/json";
+    private static final String UTF_8 = "UTF-8";
     private UserService userService;
 
     TokenAuthenticationService() {
@@ -44,8 +46,8 @@ public class TokenAuthenticationService {
                 user.getLevel(),
                 JWT);
         try {
-            res.setContentType("application/json");
-            res.setCharacterEncoding("UTF-8");
+            res.setContentType(APPLICATION_JSON);
+            res.setCharacterEncoding(UTF_8);
             ObjectMapper objectMapper = new ObjectMapper();
             res.getWriter().write(objectMapper.writeValueAsString(userDto));
         } catch (IOException e) {
