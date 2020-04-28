@@ -18,12 +18,8 @@ public class Stage {
 
     private StageCell[] cells;
 
-    public Stage(StageCell[] cells) {
-        this.cells = cells;
-    }
-
     public Stage(List<StageCell> cells, int number, String description){
-        this.cells = cells.toArray(new StageCell[cells.size()]);
+        this.cells = cells.toArray(new StageCell[0]);
         this.number = number;
         this.description = description;
     }

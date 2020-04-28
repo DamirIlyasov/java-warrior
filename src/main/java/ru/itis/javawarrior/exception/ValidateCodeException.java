@@ -5,9 +5,6 @@ package ru.itis.javawarrior.exception;
  */
 public class ValidateCodeException extends RuntimeException {
 
-    public ValidateCodeException() {
-    }
-
     public ValidateCodeException(String s) {
         super(s);
     }

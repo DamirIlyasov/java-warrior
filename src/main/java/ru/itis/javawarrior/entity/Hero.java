@@ -11,8 +11,8 @@ public class Hero extends CellContent{
     private int attackPower = 50;
 
     public Hero(){
-        health = hp;
-        damage = attackPower;
-        contentType = ContentType.HERO;
+        this.health = hp;
+        this.damage = attackPower;
+        this.contentType = ContentType.HERO;
     }
 }

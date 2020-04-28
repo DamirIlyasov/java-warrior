@@ -6,10 +6,6 @@ public interface UserService {
 
     void save(AppUser user);
 
-    void delete(Long id);
-
-    AppUser findById(Long id);
-
     AppUser findByEmail(String email);
 
     AppUser getCurrentUser();

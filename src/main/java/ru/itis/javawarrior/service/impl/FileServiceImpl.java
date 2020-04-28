@@ -5,7 +5,7 @@ import ru.itis.javawarrior.service.FileService;
 import ru.itis.javawarrior.util.compile.CompileParts;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -24,6 +24,6 @@ public class FileServiceImpl implements FileService {
                 code,
                 CompileParts.ENDING_OF_CODE);
         Path file = Paths.get(TEST_FILE_PATH);
-        Files.write(file, lines, Charset.forName("UTF-8"));
+        Files.write(file, lines, StandardCharsets.UTF_8);
     }
 }

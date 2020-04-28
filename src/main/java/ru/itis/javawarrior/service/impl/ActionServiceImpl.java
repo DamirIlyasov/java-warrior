@@ -21,7 +21,7 @@ public class ActionServiceImpl implements ActionService {
     private static final int RECOVERY = 20;
     private List<Action> responseActions;
     private int currentCell;
-    private StageCell stageCells[];
+    private StageCell[] stageCells;
     private boolean stageCompleted;
     private Hero hero;
     private MapService mapService;
@@ -108,12 +108,6 @@ public class ActionServiceImpl implements ActionService {
             }
         }
         addAction(ActionEnum.REST, 0);
-//
-//        if (stageCells[currentCell + 1].getContent() != null) {
-//            int damage = stageCells[currentCell + 1].getContent().damage();
-//            addAction(ActionEnum.MOVE_FORWARD_REJECTED, damage);
-//            damageHero(damage);
-//        }
     }
 
     @Override

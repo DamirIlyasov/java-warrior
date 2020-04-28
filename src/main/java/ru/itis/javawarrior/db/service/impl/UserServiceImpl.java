@@ -15,7 +15,6 @@ import static java.util.Collections.emptyList;
 
 @Service
 public class UserServiceImpl implements UserService, UserDetailsService {
-    private static final Long BASE_LEVEL = 1L;
 
     @Autowired
     private BaseDAO baseDAO;
@@ -23,16 +22,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public void save(AppUser user) {
         baseDAO.save(user);
-    }
-
-    @Override
-    public void delete(Long id) {
-        baseDAO.delete(AppUser.class, id);
-    }
-
-    @Override
-    public AppUser findById(Long id) {
-        return baseDAO.findById(AppUser.class, id);
     }
 
     @Override

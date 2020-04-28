@@ -44,7 +44,7 @@ public class MapServiceImpl implements MapService {
             case HERO:
                 return new StageCell(new Hero());
             default:
-                return new StageCell(null);
+                return new StageCell();
         }
     }
 }
